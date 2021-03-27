@@ -1,21 +1,14 @@
 import React from 'react';
-import {ReactDOM, useHistory } from 'react-dom';
+import ReactDOM from 'react-dom';
 import './index.css';
-
-import {
-    Route
-} from 'react-router';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import LoginScreen from "./loginPackage/LoginScreen";
-import HomePage from "./homePackage/HomePage"
+import PageHandle from "./PageHandle";
 
 ReactDOM.render(
   <React.StrictMode>
-      <Route path="/" component={LoginScreen}>
-             <Route path="/homepage" component={HomePage}/>
-      </Route>
+      <PageHandle/>
   </React.StrictMode>,
   document.getElementById('root')
 );

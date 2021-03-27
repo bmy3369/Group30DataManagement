@@ -9,7 +9,7 @@ app = Flask(__name__)  # create Flask instance
 api = Api(app)  # api routerep
 
 api.add_resource(LoginUser,'/login/<string:username>/<string:password>')
-
+api.add_resource(CreateUser,'/createUser/')
 
 if __name__ == '__main__':
     print("Starting flask");

@@ -1,6 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import React, {Component} from 'react'
+import {Redirect} from "react-router"
 import {
     Label, Form, FormGroup, Input, Container, Col, Button
 } from 'reactstrap';
@@ -11,14 +12,14 @@ class LoginScreen extends Component {
     super(props)
     this.state = {
         username: "",
-        password: ""
+        password: "",
+        newUserChange: props.onChange
      }
 
     }
     handleOutput = (output) => {
-        console.log(output)
         if (output !== false) {
-            this.context.router.history.push('/home')
+            this.state.newUserChange(output)
         }
 
 
@@ -31,16 +32,6 @@ class LoginScreen extends Component {
             this.handleOutput(jsonOutput)
         })
     }
-    fetchAllUsers = () => {
-        fetch('http://localhost:5000/allusers', {
-            mode: 'no-cors'
-        })
-            .then(response => response.json())
-            .then(jsonOutput => {
-                console.log(jsonOutput)
-            })
-    }
-
     tryLogin = () => {
         console.log(this.state.username +" "+ this.state.password)
         this.fetchUser();
