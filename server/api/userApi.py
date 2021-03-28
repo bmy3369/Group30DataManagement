@@ -51,9 +51,3 @@ class LoginUser(Resource):
         return False
 
 
-class GetUsers(Resource):
-    def get(self):
-        sql = """
-            SELECT * FROM USER 
-            """
-        return list(exec_get_all(sql))

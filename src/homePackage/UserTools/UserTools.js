@@ -4,13 +4,37 @@ import React, {Component} from 'react'
 import {
     Table, Button, Row, Input, Label, Col
 } from 'reactstrap';
+import Tool from "./Tool";
 
 class UserTools extends Component {
     constructor(props) {
         super(props)
     this.state = {
-        currentUser: props.user
+        currentUser: props.user,
+        tools: [],
      }
+    }
+
+    updateAllTools = (allTools) => {
+        this.setState({tools: allTools})
+    }
+
+    fetchAllTools = () => {
+        fetch('/getTools/' +this.state.currentUser)
+            .then(
+                response => response.json()
+            ).then(jsonOutput => {
+                this.updateAllTools(jsonOutput)
+        })
+    }
+    componentDidMount() {
+        this.fetchAllTools()
+    }
+
+    displayTool = (tool) => {
+        return (
+            <Tool tools={tool}/>
+        );
     }
 
     render () {
@@ -40,11 +64,14 @@ class UserTools extends Component {
                              <th>Categories</th>
                              <th>Purchase Date</th>
                              <th>Purchase Price</th>
-                             <th>Status</th>
+                             <th>Borrowable</th>
                              <th>Edit</th>
                              <th>Delete</th>
                         </tr>
                     </thead>
+                    <tbody className="text-left">
+                        {this.state.tools.map(tool => this.displayTool(tool))}
+                    </tbody>
                 </Table>
             </div>
         )

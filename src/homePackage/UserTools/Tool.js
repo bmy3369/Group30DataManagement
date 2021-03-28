@@ -1,23 +1,28 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import React, {Component} from 'react'
-import {
-  Navbar,NavbarBrand, NavItem, NavbarText
-} from 'reactstrap';
 
 class Tool extends Component {
     constructor(props) {
-        super(props)
+        super(props);
     this.state = {
-        currentUser: props.user
+        myToolArgs: props.tools
      }
     }
 
     render () {
         return (
-            <div className="m-4">
-                hi im ur tools
-            </div>
+            <tr >
+                <td>{this.state.myToolArgs[0]}</td>
+                <td>{this.state.myToolArgs[1]}</td>
+                <td>{this.state.myToolArgs[2]}</td>
+                <td>n/a</td>
+                <td>n/a</td>
+                <td>n/a</td>
+                <td>{this.state.myToolArgs[4]}</td>
+                <td>edit</td>
+                <td>delete</td>
+            </tr>
         )
     }
 
