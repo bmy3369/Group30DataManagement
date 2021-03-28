@@ -5,7 +5,7 @@ import {
 Label, Modal, ModalHeader, ModalBody, Form, FormGroup,NavLink, Input, ModalFooter, Button
 } from 'reactstrap'
 
-class AddTool extends Component {
+class AddToolWq extends Component {
     constructor(props) {
         super(props);
         this.state = {
