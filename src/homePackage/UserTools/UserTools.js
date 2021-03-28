@@ -5,6 +5,7 @@ import {
     Table, Button, Row, Input, Label, Col
 } from 'reactstrap';
 import Tool from "./Tool";
+import AddTool from "./AddTool";
 
 class UserTools extends Component {
     constructor(props) {
@@ -41,7 +42,7 @@ class UserTools extends Component {
         return (
             <div className="m-4">
                 <Row className="m-2">
-                     <Button className="m-2" color="primary">+ New Tool</Button>
+                     <AddTool user={this.state.currentUser} updateTable={this.fetchAllTools}/>
                     <Input className="m-2" type="searchType" id="search" placeholder="Search Params" />
                     <Col xs="auto" className="text-center">
                         <Label>Search Type</Label>

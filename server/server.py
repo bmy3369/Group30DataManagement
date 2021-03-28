@@ -12,6 +12,7 @@ api = Api(app)  # api routerep
 api.add_resource(LoginUser,'/login/<string:username>/<string:password>')
 api.add_resource(CreateUser,'/createUser/')
 api.add_resource(GetUserTools, '/getTools/<string:username>')
+api.add_resource(CreateTool, '/createTool/')
 
 if __name__ == '__main__':
     print("Starting flask");
