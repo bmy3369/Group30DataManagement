@@ -23,10 +23,9 @@ class HomePage extends Component {
                     <NavbarText> {this.state.currentUser}'s Tool Management System</NavbarText>
                 </Navbar>
 
-                <UserMainPage/>
+                <UserMainPage user={this.state.currentUser}/>
             </div>
         )
     }
-
 }
 export default HomePage;

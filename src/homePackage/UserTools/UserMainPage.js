@@ -11,6 +11,7 @@ class UserMainPage extends Component {
     constructor (props) {
         super(props)
         this.state = {
+            currentUser: props.user,
             activeTab: 1
         }
     }
@@ -44,7 +45,7 @@ class UserMainPage extends Component {
 
                 <TabContent activeTab={this.state.activeTab}>
                     <TabPane tabId="1">
-                        <UserTools/>
+                        <UserTools user={this.state.currentUser}/>
                     </TabPane>
                 <TabPane tabId="2">
                         <div>HELLO TAB 1</div>

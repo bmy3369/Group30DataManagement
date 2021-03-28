@@ -1,7 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import React, {Component} from 'react'
-import {Redirect} from "react-router"
 import {
     Label, Form, FormGroup, Input, Container, Col, Button
 } from 'reactstrap';
@@ -58,7 +57,7 @@ class LoginScreen extends Component {
                      <Label for="password">Password</Label>
                      <Input type="password" id="password" placeholder="Enter your password" onChange={this.updatePassword}/>
                   </FormGroup>
-                 <Button color="primary" onClick={this.fetchUser}>Login</Button>
+                 <Button color="primary" onClick={this.tryLogin}>Login</Button>
                  <CreateNewAccount/>
              </Form>
               </Col>
