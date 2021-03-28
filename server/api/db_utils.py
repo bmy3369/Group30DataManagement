@@ -1,7 +1,8 @@
+import hashlib
+
 import psycopg2
 import yaml
 import os
-
 
 def connect():
     config = {}
@@ -15,7 +16,6 @@ def connect():
                             host=config['host'],
                             port=config['port'])
 
-
 def exec_sql_file(path):
     full_path = os.path.join(os.path.dirname(__file__), f'{path}')
     conn = connect()
@@ -25,7 +25,6 @@ def exec_sql_file(path):
     conn.commit()
     conn.close()
 
-
 def exec_get_one(sql, args={}):
     conn = connect()
     cur = conn.cursor()
@@ -33,7 +32,6 @@ def exec_get_one(sql, args={}):
     one = cur.fetchone()
     conn.close()
     return one
-
 
 def exec_get_all(sql, args={}):
     conn = connect()
@@ -44,12 +42,15 @@ def exec_get_all(sql, args={}):
     conn.close()
     return list_of_tuples
 
-
 def exec_commit(sql, args={}):
-    # print("exec_commit:\n" + sql+"\n")
+    #print("exec_commit:\n" + sql+"\n")
     conn = connect()
     cur = conn.cursor()
     result = cur.execute(sql, args)
     conn.commit()
     conn.close()
     return result
+
+def hash_password(password):
+    code = hashlib.sha256(password.encode("utf8"))
+    return code.hexdigest()
