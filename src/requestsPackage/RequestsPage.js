@@ -5,11 +5,9 @@ import {
   Nav, NavLink, NavItem, TabContent, TabPane
 } from 'reactstrap';
 import classNames from 'classnames';
-import UserTools from "./UserTools";
-import UserRequests from "../../requestsPackage/UserRequests";
+import UserRequests from "./UserRequests";
 
-
-class UserMainPage extends Component {
+class RequestsPage extends Component {
     constructor (props) {
         super(props)
         this.state = {
@@ -31,12 +29,12 @@ class UserMainPage extends Component {
                     <NavItem>
                         <NavLink className={classNames({active: this.state.activeTab === '1'})}
                         onClick={this.toggle('1')}
-                        >My Incoming Requests</NavLink>
+                        >Incoming Requests</NavLink>
                     </NavItem>
                     <NavItem>
                         <NavLink className={classNames({active: this.state.activeTab === '2'})}
                         onClick={this.toggle}
-                        >My Lent Tools</NavLink>
+                        >My Tool List</NavLink>
                     </NavItem>
                      <NavItem>
                         <NavLink className={classNames({active: this.state.activeTab === '3'})}

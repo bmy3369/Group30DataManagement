@@ -13,3 +13,12 @@ class GetUserTools(Resource):
             WHERE tool_owner = %s
             """
         return list(exec_get_all(sql, [username]))
+
+class GetUserRequests(Resource):
+    def get(self, username):
+        sql = """
+                    SELECT username, requested_tool, duration, status
+                    FROM request
+                    WHERE tool_owner = %s
+                    """
+        return list(exec_get_all(sql, [username]))
