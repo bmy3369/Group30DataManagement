@@ -13,6 +13,7 @@ api.add_resource(LoginUser,'/login/<string:username>/<string:password>')
 api.add_resource(CreateUser,'/createUser/')
 api.add_resource(GetUserTools, '/getTools/<string:username>')
 api.add_resource(GetUserRequests, '/getRequests/<string:username>')
+api.add_resource(AcceptTool, '/acceptTool/')
 
 if __name__ == '__main__':
     print("Starting flask");

@@ -22,3 +22,19 @@ class GetUserRequests(Resource):
                     WHERE tool_owner = %s and status = 'Pending'
                     """
         return list(exec_get_all(sql, [username]))
+
+class AcceptTool(Resource):
+    def post(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument('tool', type=str)
+        parser.add_argument('date_required', type=str)
+        parser.add_argument('status', type=str)
+        args = parser.parse_args()
+
+        date_required = args['date_required']
+        sql = """
+                            UPDATE request 
+                            SET status = 'Accepted' SET date_required = date_required
+                            WHERE requested_tool = tool
+                        """
+        exec_commit(sql, (date_required, status, date_required))
