@@ -2,7 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import React, {Component} from 'react'
 import {
-    Table, Button, Row, Input, Label, Col
+    Table, Row, Input, Label, Col
 } from 'reactstrap';
 import Request from "./Request";
 
@@ -62,8 +62,6 @@ class UserTools extends Component {
                              <th>Date Required</th>
                              <th>Duration</th>
                              <th>Status</th>
-                             <th>.</th>
-                             <th>.</th>
                              <th>Accept</th>
                              <th>Deny</th>
                         </tr>

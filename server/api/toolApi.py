@@ -19,6 +19,6 @@ class GetUserRequests(Resource):
         sql = """
                     SELECT username, requested_tool, duration, status
                     FROM request
-                    WHERE tool_owner = %s
+                    WHERE tool_owner = %s and status = 'Pending'
                     """
         return list(exec_get_all(sql, [username]))

@@ -19,8 +19,6 @@ class Request extends Component {
                 <td>n/a</td>
                 <td>{this.state.myRequestArgs[2]}</td>
                 <td>{this.state.myRequestArgs[4]}</td>
-                <td>n/a</td>
-                <td>n/a</td>
                 <td><Button color={'success'}>Accept</Button></td>
                 <td><Button color={'danger'}>Deny</Button></td>
             </tr>
