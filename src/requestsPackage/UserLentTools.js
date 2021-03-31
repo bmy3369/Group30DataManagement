@@ -31,7 +31,7 @@ class UserLentTools extends Component {
      * Gets the tools from the database through the server
      */
     fetchAllTools = () => {
-        fetch('/getUserLentTools/' + this.state.currentUser)
+        fetch('/getLentTools/' + this.state.currentUser)
             .then(
                 response => response.json()
             ).then(jsonOutput => {

@@ -47,7 +47,7 @@ class GetUserLentTools(Resource):
         sql = """
                     SELECT username, requested_tool, date_required, duration
                     FROM request
-                    WHERE r.tool_owner = %s
+                    WHERE tool_owner = %s
                     AND status = 'Accepted'
                     """
         return list(exec_get_all(sql, [username]))
