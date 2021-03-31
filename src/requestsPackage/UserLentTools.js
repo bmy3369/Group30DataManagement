@@ -24,7 +24,7 @@ class LentTools extends Component {
     }
 
     fetchAllTools = () => {
-        fetch('/getRequests/' + this.state.currentUser)
+        fetch('/getUserLentTools/' + this.state.currentUser)
             .then(
                 response => response.json()
             ).then(jsonOutput => {

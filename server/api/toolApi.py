@@ -24,6 +24,7 @@ class GetUserRequests(Resource):
                     """
         return list(exec_get_all(sql, [username]))
 
+
 class AcceptTool(Resource):
     def post(self):
         parser = reqparse.RequestParser()
