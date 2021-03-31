@@ -45,9 +45,10 @@ class AcceptTool(Resource):
 class GetUserLentTools(Resource):
     def get(self, username):
         sql = """
-                    SELECT r.username, r.requested_tool, r.date_required, r.duration
-                    FROM request r, user u
-                    WHERE r.tool_owner = u.username
+                    SELECT username, requested_tool, date_required, duration
+                    FROM request
+                    WHERE r.tool_owner = %s
+                    AND status = 'Accepted'
                     """
         return list(exec_get_all(sql, [username]))
 
@@ -55,8 +56,8 @@ class GetUserLentTools(Resource):
 class GetUserBorrowedTools(Resource):
     def get(self, username):
         sql = """
-                    SELECT r.tool_owner, r.requested_tool, r.date_required, r.duration
-                    FROM request r, user u
-                    WHERE r.username = u.username
+                    SELECT tool_owner, requested_tool, date_required, duration
+                    FROM request
+                    WHERE username = %s
                     """
         return list(exec_get_all(sql, [username]))

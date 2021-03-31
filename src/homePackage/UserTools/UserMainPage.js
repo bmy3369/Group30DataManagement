@@ -7,7 +7,7 @@ import {
 import classNames from 'classnames';
 import UserTools from "./UserTools";
 import UserRequests from "../../requestsPackage/UserRequests";
-import LentTools from "../../requestsPackage/UserLentTools"
+import UserLentTools from "../../requestsPackage/UserLentTools"
 import BorrowedTools from "../../requestsPackage/UserBorrowedTools"
 
 class UserMainPage extends Component {
@@ -51,7 +51,7 @@ class UserMainPage extends Component {
                         <UserRequests user={this.state.currentUser}/>
                     </TabPane>
                 <TabPane tabId="2">
-                        <LentTools user = {this.state.currentUser}/>
+                        <UserLentTools user = {this.state.currentUser}/>
                     </TabPane>
                     <TabPane tabId="3">
                         <BorrowedTools user = {this.state.currentUser}/>

@@ -98,7 +98,7 @@ class AcceptTool extends Component {
     }
 
 }
-export default CreateNewAccount
+export default AcceptTool
 
 
 

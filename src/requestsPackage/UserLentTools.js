@@ -4,25 +4,32 @@ import React, {Component} from 'react'
 import {
     Table, Button, Row, Input, Label, Col
 } from 'reactstrap';
-import Request from "./Request";
+import LentTool from "./LentTool";
 
 /**
  * this most likely needs to be changed, it's mostly copied from the UserRequests page, it is updated in the render
  * function but I don't know what to do with the smaller functions
  */
-class LentTools extends Component {
+class UserLentTools extends Component {
     constructor(props) {
         super(props)
         this.state = {
             currentUser: props.user,
-            requests: [],
+            lentTools: [],
         }
     }
 
+    /**
+     * Sets the lentTools variable in state
+     * @param allTools an array of lent tools
+     */
     updateAllTools = (allTools) => {
-        this.setState({requests: allTools})
+        this.setState({lentTools: allTools})
     }
 
+    /**
+     * Gets the tools from the database through the server
+     */
     fetchAllTools = () => {
         fetch('/getUserLentTools/' + this.state.currentUser)
             .then(
@@ -36,9 +43,14 @@ class LentTools extends Component {
         this.fetchAllTools()
     }
 
-    displayRequests = (requests) => {
+    /**
+     * Formats the tools into a form usable in html
+     * @param lentTools the array of tools
+     * @returns {JSX.Element} a html representation of the tools from the database
+     */
+    displayTools = (lentTools) => {
         return (
-            <Request requests={requests}/>
+            <LentTool lentTools={lentTools}/>
         );
     }
 
@@ -69,7 +81,7 @@ class LentTools extends Component {
                     </tr>
                     </thead>
                     <tbody className="text-left">
-                    {this.state.requests.map(requests => this.displayRequests(requests))}
+                    {this.state.lentTools.map(lentTools => this.displayTools(lentTools))}
                     </tbody>
                 </Table>
             </div>
@@ -78,4 +90,4 @@ class LentTools extends Component {
 
 }
 
-export default LentTools;
+export default UserLentTools;
