@@ -24,7 +24,7 @@ class BorrowedTools extends Component {
     }
 
     fetchAllTools = () => {
-        fetch('/getRequests/' + this.state.currentUser)
+        fetch('/getBorrowedTools/' + this.state.currentUser)
             .then(
                 response => response.json()
             ).then(jsonOutput => {

@@ -14,6 +14,7 @@ api.add_resource(CreateUser, '/createUser/')
 api.add_resource(GetUserTools, '/getTools/<string:username>')
 api.add_resource(GetUserRequests, '/getRequests/<string:username>')
 api.add_resource(GetUserLentTools, '/getLentTools/<string:username>')
+api.add_resource(GetUserBorrowedTools, '/getBorrowedTools/<string:username>')
 api.add_resource(AcceptTool, '/acceptTool/')
 
 if __name__ == '__main__':

@@ -50,3 +50,13 @@ class GetUserLentTools(Resource):
                     WHERE r.tool_owner = u.username
                     """
         return list(exec_get_all(sql, [username]))
+
+
+class GetUserBorrowedTools(Resource):
+    def get(self, username):
+        sql = """
+                    SELECT r.tool_owner, r.requested_tool, r.date_required, r.duration
+                    FROM request r, user u
+                    WHERE r.username = u.username
+                    """
+        return list(exec_get_all(sql, [username]))
