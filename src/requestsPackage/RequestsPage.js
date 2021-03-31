@@ -6,6 +6,7 @@ import {
 } from 'reactstrap';
 import classNames from 'classnames';
 import UserRequests from "./UserRequests";
+import UserLentTools from "./UserLentTools";
 
 class RequestsPage extends Component {
     constructor (props) {
@@ -33,7 +34,7 @@ class RequestsPage extends Component {
                     </NavItem>
                     <NavItem>
                         <NavLink className={classNames({active: this.state.activeTab === '2'})}
-                        onClick={this.toggle}
+                        onClick={this.toggle('2')}
                         >My Tool List</NavLink>
                     </NavItem>
                      <NavItem>
@@ -48,7 +49,7 @@ class RequestsPage extends Component {
                         <UserRequests user={this.state.currentUser}/>
                     </TabPane>
                 <TabPane tabId="2">
-                        <div>HELLO TAB 1</div>
+                        <UserLentTools user={this.state.currentUser}/>
                     </TabPane>
                     <TabPane tabId="3">
                         <div>HELLO TAB 1</div>

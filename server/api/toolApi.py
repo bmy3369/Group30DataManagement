@@ -14,6 +14,7 @@ class GetUserTools(Resource):
             """
         return list(exec_get_all(sql, [username]))
 
+
 class GetUserRequests(Resource):
     def get(self, username):
         sql = """
@@ -38,3 +39,13 @@ class AcceptTool(Resource):
                             WHERE requested_tool = tool
                         """
         exec_commit(sql, (date_required, status, date_required))
+
+
+class GetUserLentTools(Resource):
+    def get(self, username):
+        sql = """
+                    SELECT r.username, r.requested_tool, r.date_required, r.duration
+                    FROM request r, user u
+                    WHERE r.tool_owner = u.username
+                    """
+        return list(exec_get_all(sql, [username]))
