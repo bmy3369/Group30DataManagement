@@ -2,7 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import React, {Component} from 'react'
 import {
-    Table, Button, Row, Input, Label, Col
+    Table, Row, Input, Label, Col
 } from 'reactstrap';
 import LentTool from "./LentTool";
 
