@@ -7,14 +7,14 @@ import {
 import classNames from 'classnames';
 import UserTools from "./UserTools";
 import UserRequests from "../../requestsPackage/UserRequests";
-
+import LentTools from "../../requestsPackage/UserLentTools"
 
 class UserMainPage extends Component {
     constructor (props) {
         super(props)
         this.state = {
             currentUser: props.user,
-            activeTab: 1
+            activeTab: '1'
         }
     }
 
@@ -30,17 +30,17 @@ class UserMainPage extends Component {
                 <Nav tabs>
                     <NavItem>
                         <NavLink className={classNames({active: this.state.activeTab === '1'})}
-                        onClick={this.toggle('1')}
+                        onClick={() => this.toggle('1')}
                         >My Incoming Requests</NavLink>
                     </NavItem>
                     <NavItem>
                         <NavLink className={classNames({active: this.state.activeTab === '2'})}
-                        onClick={this.toggle}
+                        onClick={() => this.toggle('2')}
                         >My Lent Tools</NavLink>
                     </NavItem>
                      <NavItem>
                         <NavLink className={classNames({active: this.state.activeTab === '3'})}
-                        onClick={this.toggle}
+                        onClick={() => this.toggle}
                         >My Borrowed Tools</NavLink>
                     </NavItem>
                 </Nav>
@@ -50,7 +50,7 @@ class UserMainPage extends Component {
                         <UserRequests user={this.state.currentUser}/>
                     </TabPane>
                 <TabPane tabId="2">
-                        <div>HELLO TAB 1</div>
+                        <LentTools user = {this.state.currentUser}/>
                     </TabPane>
                     <TabPane tabId="3">
                         <div>HELLO TAB 1</div>
