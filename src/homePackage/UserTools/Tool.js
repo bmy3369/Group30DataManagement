@@ -17,7 +17,7 @@ class Tool extends Component {
                 <td align={'center'}>{this.state.myToolArgs[1]}</td>
                 <td align={'center'}>{this.state.myToolArgs[2]}</td>
                 <td align={'center'}>n/a</td>
-                <td align={'center'}>>n/a</td>
+                <td align={'center'}>n/a</td>
                 <td align={'center'}>n/a</td>
                 <td align={'center'}>{this.state.myToolArgs[4]}</td>
                 <td align={'center'}>edit</td>
