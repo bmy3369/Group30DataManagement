@@ -45,7 +45,7 @@ class AcceptTool(Resource):
 class GetUserLentTools(Resource):
     def get(self, username):
         sql = """
-                    SELECT username, requested_tool, date_required, duration
+                    SELECT username, requested_tool, duration
                     FROM request
                     WHERE tool_owner = %s
                     AND status = 'Accepted'
@@ -56,7 +56,7 @@ class GetUserLentTools(Resource):
 class GetUserBorrowedTools(Resource):
     def get(self, username):
         sql = """
-                    SELECT tool_owner, requested_tool, date_required, duration
+                    SELECT tool_owner, requested_tool, duration
                     FROM request
                     WHERE username = %s
                     """
