@@ -14,6 +14,7 @@ class GetUserTools(Resource):
             """
         return list(exec_get_all(sql, [username]))
 
+
 class CreateTool(Resource):
     def post(self):
         parser = reqparse.RequestParser()
@@ -38,7 +39,6 @@ class CreateTool(Resource):
         exec_commit(sql, (tool_name, description, owner, purchase_price, purchase_date, shareable))
 
 
-
 class GetUserRequests(Resource):
     def get(self, username):
         sql = """
@@ -57,6 +57,7 @@ class AcceptTool(Resource):
                             WHERE requested_tool = %s
                         """
         exec_commit(sql, (requested_tool,))
+
 
 class DenyTool(Resource):
     def post(self, requested_tool):
@@ -89,7 +90,6 @@ class GetUserBorrowedTools(Resource):
         return list(exec_get_all(sql, [username]))
 
 
-
 # In progress
 class ReturnTool(Resource):
     def post(self):
@@ -98,7 +98,7 @@ class ReturnTool(Resource):
         parser.add_argument('tool', type=str)
 
         tool_owner = args['username']
-        tool_requested = int(args['tool'])
+        tool_requested = args['tool']
         sql = """
                     DELETE FROM request
                     WHERE tool_owner = %s AND requested_tool = %s
