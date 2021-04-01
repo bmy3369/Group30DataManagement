@@ -20,8 +20,8 @@ class Request extends Component {
                 <td align={'center'}>{this.state.myRequestArgs[1]}</td>
                 <td align={'center'}>n/a</td>
                 <td align={'center'}>{this.state.myRequestArgs[2]}</td>
-                <td align={'center'}><AcceptTool requested_tool={this.state.myRequestArgs[1]}></AcceptTool></td>
-                <td align={'center'}><DenyTool requested_tool={this.state.myRequestArgs[1]}></DenyTool></td>
+                <td align={'center'}><AcceptTool requested_tool={this.state.myRequestArgs[1]} user={this.state.myRequestArgs[0]}></AcceptTool></td>
+                <td align={'center'}><DenyTool requested_tool={this.state.myRequestArgs[1]} user={this.state.myRequestArgs[0]}></DenyTool></td>
             </tr>
         )
     }

@@ -16,8 +16,8 @@ api.add_resource(GetUserTools, '/getTools/<string:username>')
 api.add_resource(GetUserRequests, '/getRequests/<string:username>')
 api.add_resource(GetUserLentTools, '/getLentTools/<string:username>')
 api.add_resource(GetUserBorrowedTools, '/getBorrowedTools/<string:username>')
-api.add_resource(AcceptTool, '/acceptTool/<string:requested_tool>')
-api.add_resource(DenyTool, '/denyTool/<string:requested_tool>')
+api.add_resource(AcceptTool, '/acceptTool/<string:requested_tool>/<string:username>')
+api.add_resource(DenyTool, '/denyTool/<string:requested_tool>/<string:username>')
 api.add_resource(ReturnTool, '/returnTool/')
 
 if __name__ == '__main__':

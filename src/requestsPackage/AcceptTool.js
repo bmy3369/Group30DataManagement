@@ -17,7 +17,7 @@ class AcceptTool extends Component {
         super(props);
 
         this.state = {
-            /*username: props.user,*/
+            username: props.user,
             requested_tool: props.requested_tool,
             date_required: "",
             modal: false
@@ -36,7 +36,7 @@ class AcceptTool extends Component {
     }
     acceptTool = () => {
         const data = {
-            /*username: this.state.username,*/
+            username: this.state.username,
             requested_tool: this.state.requested_tool,
             /*duration_requested: this.state.duration_requested,
             date_required: this.state.date_required*/
@@ -46,7 +46,7 @@ class AcceptTool extends Component {
             headers: {Accept:'application/json', 'Content-Type':'application/json'},
             body: JSON.stringify(data)
         }
-        const getUrl = '/acceptTool/' + this.state.requested_tool
+        const getUrl = '/acceptTool/' + this.state.requested_tool + "/" + this.state.username
         fetch( getUrl, reqOptions)
             .then(response => response.json())
             .then(

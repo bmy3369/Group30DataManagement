@@ -10,6 +10,7 @@ class DenyTool extends Component {
         super(props);
 
         this.state = {
+            username: props.user,
             requested_tool: props.requested_tool,
             date_required: "",
             modal: false
@@ -22,6 +23,7 @@ class DenyTool extends Component {
     }
     denyTool = () => {
         const data = {
+            username: this.state.username,
             requested_tool: this.state.requested_tool,
             /*date_required: this.state.date_required*/
         }
@@ -30,7 +32,7 @@ class DenyTool extends Component {
             headers: {Accept:'application/json', 'Content-Type':'application/json'},
             body: JSON.stringify(data)
         }
-        const getUrl = '/denyTool/' + this.state.requested_tool
+        const getUrl = '/denyTool/' + this.state.requested_tool + "/" + this.state.username
         fetch( getUrl, reqOptions)
             .then(response => response.json())
             .then(

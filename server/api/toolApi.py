@@ -50,22 +50,22 @@ class GetUserRequests(Resource):
 
 
 class AcceptTool(Resource):
-    def post(self, requested_tool):
+    def post(self, requested_tool, username):
         sql = """
                             UPDATE request 
                             SET status = 'Accepted'
-                            WHERE requested_tool = %s
+                            WHERE requested_tool = %s AND username = %s
                         """
-        exec_commit(sql, (requested_tool,))
+        exec_commit(sql, (requested_tool, username))
 
 class DenyTool(Resource):
-    def post(self, requested_tool):
+    def post(self, requested_tool, username):
         sql = """
                             UPDATE request 
                             SET status = 'Denied'
-                            WHERE requested_tool = %s
+                            WHERE requested_tool = %s AND username = %s
                         """
-        exec_commit(sql, (requested_tool,))
+        exec_commit(sql, (requested_tool, username))
 
 
 class GetUserLentTools(Resource):
