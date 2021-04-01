@@ -54,3 +54,20 @@ class GetUserBorrowedTools(Resource):
                     WHERE username = %s
                     """
         return list(exec_get_all(sql, [username]))
+
+
+
+# In progress
+class ReturnTool(Resource):
+    def post(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument('username', type=str)
+        parser.add_argument('tool', type=str)
+
+        tool_owner = args['username']
+        tool_requested = int(args['tool'])
+        sql = """
+                    DELETE FROM request
+                    WHERE tool_owner = %s AND requested_tool = %d
+                    """
+        exec_commit(sql, (tool_owner, tool_requested))

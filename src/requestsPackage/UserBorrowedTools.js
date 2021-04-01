@@ -2,7 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import React, {Component} from 'react'
 import {
-    Table, Button, Row, Input, Label, Col
+    Table, Row, Input, Label, Col
 } from 'reactstrap';
 import BorrowedTool from "./BorrowedTool";
 
@@ -66,6 +66,7 @@ class BorrowedTools extends Component {
                         <th>Tool Borrowed</th>
                         <th>Date Required</th>
                         <th>Duration</th>
+                        <th>Return Tool</th>
                     </tr>
                     </thead>
                     <tbody className="text-left">
