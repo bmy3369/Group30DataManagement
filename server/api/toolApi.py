@@ -61,3 +61,13 @@ class GetUserBorrowedTools(Resource):
                     WHERE username = %s
                     """
         return list(exec_get_all(sql, [username]))
+
+
+# In progress
+class ReturnTool(Resource):
+    def post(self, username, requested_tool):
+        sql = """
+                    DELETE from request
+                    where username = %s and requested_tool = %s
+                    """
+        exec_commit(sql, (date_required, username, requested_tool))

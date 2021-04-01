@@ -66,6 +66,7 @@ class BorrowedTools extends Component {
                         <th>Tool Borrowed</th>
                         <th>Date Required</th>
                         <th>Duration</th>
+                        <th>Return Tool</th>
                     </tr>
                     </thead>
                     <tbody className="text-left">
