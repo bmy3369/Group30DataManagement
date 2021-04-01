@@ -32,28 +32,36 @@ class UserMainPage extends Component {
                     <NavItem>
                         <NavLink className={classNames({active: this.state.activeTab === '1'})}
                         onClick={() => this.toggle('1')}
-                        >My Incoming Requests</NavLink>
+                        >My Tools</NavLink>
                     </NavItem>
                     <NavItem>
                         <NavLink className={classNames({active: this.state.activeTab === '2'})}
                         onClick={() => this.toggle('2')}
+                        >My Incoming Requests</NavLink>
+                    </NavItem>
+                    <NavItem>
+                        <NavLink className={classNames({active: this.state.activeTab === '3'})}
+                        onClick={() => this.toggle('3')}
                         >My Lent Tools</NavLink>
                     </NavItem>
                      <NavItem>
-                        <NavLink className={classNames({active: this.state.activeTab === '3'})}
-                        onClick={() => this.toggle('3')}
+                        <NavLink className={classNames({active: this.state.activeTab === '4'})}
+                        onClick={() => this.toggle('4')}
                         >My Borrowed Tools</NavLink>
                     </NavItem>
                 </Nav>
 
                 <TabContent activeTab={this.state.activeTab}>
                     <TabPane tabId="1">
+                        <UserTools user={this.state.currentUser}/>
+                    </TabPane>
+                    <TabPane tabId="2">
                         <UserRequests user={this.state.currentUser}/>
                     </TabPane>
-                <TabPane tabId="2">
+                    <TabPane tabId="3">
                         <UserLentTools user = {this.state.currentUser}/>
                     </TabPane>
-                    <TabPane tabId="3">
+                    <TabPane tabId="4">
                         <BorrowedTools user = {this.state.currentUser}/>
                     </TabPane>
 
