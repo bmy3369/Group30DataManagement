@@ -26,19 +26,13 @@ class GetUserRequests(Resource):
 
 
 class AcceptTool(Resource):
-    def post(self):
-        parser = reqparse.RequestParser()
-        parser.add_argument('tool', type=str)
-        parser.add_argument('status', type=str)
-        args = parser.parse_args()
-
-        tool = args['tool']
+    def post(self, requested_tool):
         sql = """
                             UPDATE request 
                             SET status = 'Accepted'
-                            WHERE requested_tool = tool
+                            WHERE requested_tool = %s
                         """
-        exec_commit(sql, (date_required, status, date_required))
+        exec_commit(sql, (requested_tool,))
 
 
 class GetUserLentTools(Resource):

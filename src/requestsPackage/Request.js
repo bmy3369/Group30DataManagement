@@ -19,7 +19,7 @@ class Request extends Component {
                 <td align={'center'}>{this.state.myRequestArgs[1]}</td>
                 <td align={'center'}>n/a</td>
                 <td align={'center'}>{this.state.myRequestArgs[2]}</td>
-                <td align={'center'}><AcceptTool></AcceptTool></td>
+                <td align={'center'}><AcceptTool requested_tool={this.state.myRequestArgs[1]}></AcceptTool></td>
                 <td align={'center'}><Button color={'danger'}>Deny</Button></td>
             </tr>
         )

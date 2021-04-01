@@ -15,10 +15,10 @@ import "react-datepicker/dist/react-datepicker.css";
 class AcceptTool extends Component {
     constructor(props) {
         super(props);
+
         this.state = {
-            username: "",
-            requested_tool: "",
-            duration_requested: "",
+            /*username: props.user,*/
+            requested_tool: props.requested_tool,
             date_required: "",
             modal: false
         }
@@ -26,26 +26,28 @@ class AcceptTool extends Component {
 
     toggle = () => {
         this.setState({modal: !this.state.modal});
+        /*
         if (this.state.modal === false) {
             this.setState({username: ""})
              this.setState({requested_tool: ""})
              this.setState({duration_requested: ""})
              this.setState({date_required: ""})
-        }
+        }*/
     }
     acceptTool = () => {
         const data = {
-            username: this.state.username,
+            /*username: this.state.username,*/
             requested_tool: this.state.requested_tool,
-            duration_requested: this.state.duration_requested,
-            date_required: this.state.date_required
+            /*duration_requested: this.state.duration_requested,
+            date_required: this.state.date_required*/
         }
         const reqOptions = {
             method: 'POST',
             headers: {Accept:'application/json', 'Content-Type':'application/json'},
             body: JSON.stringify(data)
         }
-        fetch('/acceptTool/', reqOptions)
+        const getUrl = '/acceptTool/' + this.state.requested_tool
+        fetch( getUrl, reqOptions)
             .then(response => response.json())
             .then(
                 this.fetchData
@@ -73,7 +75,7 @@ class AcceptTool extends Component {
                             </FormGroup>
                             <FormGroup>
                                 <Label>Set Return date:</Label>
-                                <Input type="text" id="enteredReturnDate" value={this.state.returnDate} onChange={this.updateProp}/>
+
                             </FormGroup>
                         </Form>
                     </ModalBody>
