@@ -5,11 +5,12 @@ import {
 Label, Modal, ModalHeader, ModalBody, Form, FormGroup,NavLink, Input, ModalFooter, Button
 } from 'reactstrap'
 
+/**
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
-
+*/
 
 class AcceptTool extends Component {
     constructor(props) {
@@ -51,16 +52,8 @@ class AcceptTool extends Component {
             )
     }
     updateProp = (event) => {
-        if(event.target.id === "enteredUsername") {
-            this.setState({username: event.target.value})
-        } else if(event.target.id === "enteredPassword") {
-            this.setState({password: event.target.value})
-        }else if(event.target.id === "enteredEmail") {
-            this.setState({email: event.target.value})
-        }else if(event.target.id === "enteredFirst") {
-            this.setState({first: event.target.value})
-        }else if(event.target.id === "enteredLast") {
-            this.setState({last: event.target.value})
+        if(event.target.id === "enteredReturnDate") {
+            this.setState({date_required: event.target.value})
         }
     }
     submitForm = () => {
@@ -70,22 +63,17 @@ class AcceptTool extends Component {
     render() {
         return (
             <div>
-                <NavLink onClick={this.toggle}>Accept Request?</NavLink>
+                <Button className="m-2" color="success" onClick={this.toggle}>Accept</Button>
                 <Modal isOpen={this.state.modal} toggle={this.toggle}>
                     <ModalHeader toggle={this.toggle}>Accept Request?</ModalHeader>
                     <ModalBody className={"m-4"}>
                         <Form>
                             <FormGroup>
-                                <Label>User requesting:</Label>
-                            </FormGroup>
-                            <FormGroup>
-                                <Label>Tool being requested:</Label>
-                            </FormGroup>
-                            <FormGroup>
-                                <Label>Number of days requested:</Label>
+                                <Label>By accepting, you agree to lend this user the specified tool.</Label>
                             </FormGroup>
                             <FormGroup>
                                 <Label>Set Return date:</Label>
+                                <Input type="text" id="enteredReturnDate" value={this.state.returnDate} onChange={this.updateProp}/>
                             </FormGroup>
                         </Form>
                     </ModalBody>
