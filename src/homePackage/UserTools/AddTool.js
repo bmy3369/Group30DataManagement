@@ -5,97 +5,104 @@ import {
 Label, Modal, ModalHeader, ModalBody, Form, FormGroup,NavLink, Input, ModalFooter, Button
 } from 'reactstrap'
 
-class AddToolWq extends Component {
+class AddTool extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: "",
-            password: "",
-            email: "",
-            last: "",
-            first: "",
-            modal: false
+            tool_name: "",
+            description: "",
+            purchase_date: "",
+            purchase_price: "",
+            shareable: false,
+            owner: props.user,
+            modal: false,
         }
     }
 
     toggle = () => {
         this.setState({modal: !this.state.modal});
         if (this.state.modal === false) {
-            this.setState({username: ""})
-             this.setState({password: ""})
-             this.setState({email: ""})
-             this.setState({first: ""})
-             this.setState({last: ""})
+            this.setState({tool_name: ""})
+             this.setState({description: ""})
+             this.setState({purchase_date: ""})
+             this.setState({purchase_price: ""})
+             this.setState({shareable: false})
         }
     }
-    createUser = () => {
+    createTool = () => {
         const data = {
-            username: this.state.username,
-            password: this.state.password,
-            email: this.state.email,
-            first: this.state.first,
-            last: this.state.last
+            name: this.state.tool_name,
+            description: this.state.description,
+            purchase_date: this.state.purchase_date,
+            purchase_price: this.state.purchase_price,
+            shareable: this.state.shareable,
+            owner: this.state.owner
         }
         const reqOptions = {
             method: 'POST',
             headers: {Accept:'application/json', 'Content-Type':'application/json'},
             body: JSON.stringify(data)
         }
-        fetch('/createUser/', reqOptions)
+        fetch('/createTool/', reqOptions)
             .then(response => response.json())
             .then(
                 this.fetchData
             )
+        this.updateTool()
     }
+    updateTool = () => {
+        this.props.updateTable()
+    }
+
     updateProp = (event) => {
-        if(event.target.id === "enteredUsername") {
-            this.setState({username: event.target.value})
-        } else if(event.target.id === "enteredPassword") {
-            this.setState({password: event.target.value})
-        }else if(event.target.id === "enteredEmail") {
-            this.setState({email: event.target.value})
-        }else if(event.target.id === "enteredFirst") {
-            this.setState({first: event.target.value})
-        }else if(event.target.id === "enteredLast") {
-            this.setState({last: event.target.value})
+        if(event.target.id === "enteredName") {
+            this.setState({tool_name: event.target.value})
+        } else if(event.target.id === "enteredDescription") {
+            this.setState({description: event.target.value})
+        }else if(event.target.id === "enteredPurchaseDate") {
+            this.setState({purchase_date: event.target.value})
+        }else if(event.target.id === "enteredPurchasePrice") {
+            this.setState({purchase_price: event.target.value})
+        }else if(event.target.id === "enteredShareable") {
+            this.setState({shareable: event.target.value})
         }
     }
     submitForm = () => {
-        this.createUser()
+        this.createTool()
         this.toggle()
     }
     render() {
         return (
             <div>
-                <NavLink onClick={this.toggle}>Create New Account</NavLink>
+                <Button className="m-2" color="primary" onClick={this.toggle}>+ New Tool</Button>
                 <Modal isOpen={this.state.modal} toggle={this.toggle}>
-                    <ModalHeader toggle={this.toggle}>Create New Account</ModalHeader>
+                    <ModalHeader toggle={this.toggle}>Create New Tool</ModalHeader>
                     <ModalBody className={"m-4"}>
                         <Form>
                             <FormGroup>
-                                <Label>Username</Label>
-                                <Input type="text" id="enteredUsername" value={this.state.username} onChange={this.updateProp}/>
+                                <Label>Tool Name</Label>
+                                <Input type="text" id="enteredName" value={this.state.tool_name} onChange={this.updateProp}/>
                             </FormGroup>
                             <FormGroup>
-                                <Label>Password</Label>
-                                <Input type="text" id="enteredPassword" value={this.state.password} onChange={this.updateProp}/>
+                                <Label>Description</Label>
+                                <Input type="text" id="enteredDescription" value={this.state.description} onChange={this.updateProp}/>
                             </FormGroup>
                             <FormGroup>
-                                <Label>Email</Label>
-                                <Input type="text" id="enteredEmail" value={this.state.email} onChange={this.updateProp}/>
+                                <Label>Purchase Date</Label>
+                                <Input type="text" id="enteredPurchaseDate" value={this.state.purchase_date} onChange={this.updateProp}/>
                             </FormGroup>
                             <FormGroup>
-                                <Label>First Name</Label>
-                                <Input type="text" id="enteredFirst" value={this.state.first} onChange={this.updateProp}/>
+                                <Label>Purchase Price</Label>
+                                <Input type="text" id="enteredPurchasePrice" value={this.state.purchase_price} onChange={this.updateProp}/>
                             </FormGroup>
                             <FormGroup>
-                                <Label>Last Name</Label>
-                                <Input type="text" id="enteredLast" value={this.state.last} onChange={this.updateProp}/>
+                                <Label>Shareable</Label>
+                                <Input type="checkbox" id="enteredShareable" value={this.state.shareable} onChange={this.updateProp}/>
                             </FormGroup>
                         </Form>
                     </ModalBody>
                     <ModalFooter>
-                        <Button color="primary" onClick={this.submitForm}>Create Account</Button>
+                        <Button color="primary" onClick={this.submitForm}>Create Tool</Button>
                     </ModalFooter>
                 </Modal>
             </div>
