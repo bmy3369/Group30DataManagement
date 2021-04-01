@@ -4,7 +4,7 @@ import React, {Component} from 'react'
 import {
     Table, Button, Row, Input, Label, Col
 } from 'reactstrap';
-import Request from "./Request";
+import BorrowedTool from "./BorrowedTool";
 
 /**
  * this most likely needs to be changed, it's mostly copied from the UserRequests page, it is updated in the render
@@ -15,12 +15,12 @@ class BorrowedTools extends Component {
         super(props)
         this.state = {
             currentUser: props.user,
-            requests: [],
+            borrowedTools: [],
         }
     }
 
     updateAllTools = (allTools) => {
-        this.setState({requests: allTools})
+        this.setState({borrowedTools: allTools})
     }
 
     fetchAllTools = () => {
@@ -36,9 +36,9 @@ class BorrowedTools extends Component {
         this.fetchAllTools()
     }
 
-    displayRequests = (requests) => {
+    displayTools = (borrowedTools) => {
         return (
-            <Request requests={requests}/>
+            <BorrowedTool borrowedTools={borrowedTools}/>
         );
     }
 
@@ -58,7 +58,7 @@ class BorrowedTools extends Component {
                         </Input>
                     </Col>
                 </Row>
-                <header className="text-center">Lent Tools</header>
+                <header className="text-center">Borrowed Tools</header>
                 <Table>
                     <thead>
                     <tr className="text-center">
@@ -69,7 +69,7 @@ class BorrowedTools extends Component {
                     </tr>
                     </thead>
                     <tbody className="text-left">
-                    {this.state.requests.map(requests => this.displayRequests(requests))}
+                    {this.state.borrowedTools.map(borrowedTools => this.displayTools(borrowedTools))}
                     </tbody>
                 </Table>
             </div>
