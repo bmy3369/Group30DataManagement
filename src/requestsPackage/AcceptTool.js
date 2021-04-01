@@ -5,11 +5,12 @@ import {
 Label, Modal, ModalHeader, ModalBody, Form, FormGroup,NavLink, Input, ModalFooter, Button
 } from 'reactstrap'
 
+/**
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
-
+*/
 
 class AcceptTool extends Component {
     constructor(props) {
@@ -70,7 +71,7 @@ class AcceptTool extends Component {
     render() {
         return (
             <div>
-                <NavLink onClick={this.toggle}>Accept Request?</NavLink>
+                <Button className="m-2" color="success" onClick={this.toggle}>Accept</Button>
                 <Modal isOpen={this.state.modal} toggle={this.toggle}>
                     <ModalHeader toggle={this.toggle}>Accept Request?</ModalHeader>
                     <ModalBody className={"m-4"}>
