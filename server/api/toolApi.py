@@ -4,6 +4,8 @@ from flask_restful import reqparse
 
 from .db_utils import *
 
+from datetime import datetime, timedelta
+
 
 class GetUserTools(Resource):
     def get(self, username):
@@ -13,6 +15,7 @@ class GetUserTools(Resource):
             WHERE tool_owner = %s
             """
         return list(exec_get_all(sql, [username]))
+
 
 class CreateTool(Resource):
     def post(self):
@@ -36,7 +39,6 @@ class CreateTool(Resource):
                     VALUES (%s, %s, %s, %s, %s, %s)
                 """
         exec_commit(sql, (tool_name, description, owner, purchase_price, purchase_date, shareable))
-
 
 
 class GetUserRequests(Resource):
@@ -104,3 +106,12 @@ class ReturnTool(Resource):
                     WHERE tool_owner = %s AND requested_tool = %d
                     """
         exec_commit(sql, (tool_owner, tool_requested))
+
+
+class DeleteTool(Resource):
+    def post(self, tool):
+        sql = """
+                                    DELETE FROM tools 
+                                    WHERE barcode = %s
+                                """
+        exec_commit(sql, (tool,))
