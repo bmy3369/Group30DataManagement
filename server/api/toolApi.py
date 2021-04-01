@@ -101,6 +101,6 @@ class ReturnTool(Resource):
         tool_requested = int(args['tool'])
         sql = """
                     DELETE FROM request
-                    WHERE tool_owner = %s AND requested_tool = %d
+                    WHERE tool_owner = %s AND requested_tool = %s
                     """
         exec_commit(sql, (tool_owner, tool_requested))
