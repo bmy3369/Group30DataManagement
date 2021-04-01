@@ -32,7 +32,7 @@ class AcceptTool(Resource):
         parser.add_argument('status', type=str)
         args = parser.parse_args()
 
-        date_required = args['date_required']
+        tool = args['tool']
         sql = """
                             UPDATE request 
                             SET status = 'Accepted'
