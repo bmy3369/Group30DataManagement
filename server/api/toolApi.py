@@ -34,6 +34,15 @@ class AcceptTool(Resource):
                         """
         exec_commit(sql, (requested_tool,))
 
+class DenyTool(Resource):
+    def post(self, requested_tool):
+        sql = """
+                            UPDATE request 
+                            SET status = 'Denied'
+                            WHERE requested_tool = %s
+                        """
+        exec_commit(sql, (requested_tool,))
+
 
 class GetUserLentTools(Resource):
     def get(self, username):
