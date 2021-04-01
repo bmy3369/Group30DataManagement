@@ -13,15 +13,15 @@ class Tool extends Component {
     render () {
         return (
             <tr >
-                <td>{this.state.myToolArgs[0]}</td>
-                <td>{this.state.myToolArgs[1]}</td>
-                <td>{this.state.myToolArgs[2]}</td>
-                <td>n/a</td>
-                <td>n/a</td>
-                <td>n/a</td>
-                <td>{this.state.myToolArgs[4]}</td>
-                <td>edit</td>
-                <td>delete</td>
+                <td align={'center'}>{this.state.myToolArgs[0]}</td>
+                <td align={'center'}>{this.state.myToolArgs[1]}</td>
+                <td align={'center'}>{this.state.myToolArgs[2]}</td>
+                <td align={'center'}>n/a</td>
+                <td align={'center'}>>n/a</td>
+                <td align={'center'}>n/a</td>
+                <td align={'center'}>{this.state.myToolArgs[4]}</td>
+                <td align={'center'}>edit</td>
+                <td align={'center'}>delete</td>
             </tr>
         )
     }
