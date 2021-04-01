@@ -18,7 +18,7 @@ class GetUserTools(Resource):
 class GetUserRequests(Resource):
     def get(self, username):
         sql = """
-                    SELECT username, requested_tool, duration, status
+                    SELECT username, requested_tool, duration
                     FROM request
                     WHERE tool_owner = %s and status = 'Pending'
                     """

@@ -61,7 +61,6 @@ class UserTools extends Component {
                              <th>Tool Requested</th>
                              <th>Date Required</th>
                              <th>Duration</th>
-                             <th>Status</th>
                              <th>Accept</th>
                              <th>Deny</th>
                         </tr>
