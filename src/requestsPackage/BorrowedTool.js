@@ -38,7 +38,8 @@ class BorrowedTool extends Component {
             headers: {Accept: 'application/json', 'Content-Type': 'application/json'},
             body: JSON.stringify(data)
         }
-        fetch('/returnTool/' + reqOptions)
+        const url = '/returnTool/' + this.state.myBorrowedToolArgs[0] +'/' + this.state.myBorrowedToolArgs[1]
+        fetch(url, reqOptions)
             .then(response => response.json())
             .then(
                 this.fetchData
