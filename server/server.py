@@ -23,7 +23,7 @@ api.add_resource(DeleteTool, '/deleteTool/<string:tool>')
 api.add_resource(AvailableTools, '/getAvailableTools/<string:username>')
 api.add_resource(RequestTool, '/requestTool/<string:requested_tool>/<string:username>/<string:tool_owner>')
 api.add_resource(GetUserOutgoing, '/getOutgoing/<string:username>')
-
+api.add_resource(CancelRequest, '/cancelRequest/<string:requested_tool>/<string:username>')
 
 if __name__ == '__main__':
     print("Starting flask");

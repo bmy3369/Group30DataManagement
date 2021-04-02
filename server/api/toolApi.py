@@ -158,3 +158,13 @@ class GetUserOutgoing(Resource):
                     WHERE username = %s and status = 'Pending'
                     """
         return list(exec_get_all(sql, [username]))
+
+
+class CancelRequest(Resource):
+    def post(self, username, requested_tool):
+        sql = """ 
+
+                    DELETE FROM request
+                    WHERE username = %s AND requested_tool = %s;
+        """
+        exec_commit(sql, [username, requested_tool])

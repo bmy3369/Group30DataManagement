@@ -17,6 +17,7 @@ class UserOutgoing extends Component {
 
     updateAllTools = (allRequests) => {
         this.setState({requests: allRequests})
+        this.setState({user: this.state.currentUser})
     }
 
     fetchAllTools = () => {
@@ -33,7 +34,7 @@ class UserOutgoing extends Component {
 
     displayRequests = (requests) => {
         return (
-            <Outgoing requests={requests}/>
+            <Outgoing requests={requests} user={this.state.currentUser}/>
         );
     }
 
