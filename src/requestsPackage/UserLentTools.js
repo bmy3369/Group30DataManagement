@@ -2,7 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import React, {Component} from 'react'
 import {
-    Table, Row, Input, Label, Col
+    Button, Table, Row, Input, Label, Col
 } from 'reactstrap';
 import LentTool from "./LentTool";
 
@@ -57,6 +57,7 @@ class UserLentTools extends Component {
     render() {
         return (
             <div className="m-4">
+                <Button color={'success'} onClick={this.fetchAllTools}>Refresh</Button>
                 <header className="text-center">Lent Tools</header>
                 <Table>
                     <thead>

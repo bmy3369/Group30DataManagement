@@ -72,7 +72,7 @@ class DenyTool(Resource):
 class GetUserLentTools(Resource):
     def get(self, username):
         sql = """
-                    SELECT username, requested_tool, duration
+                    SELECT username, requested_tool, date_required, duration
                     FROM request
                     WHERE tool_owner = %s
                     AND status = 'Accepted'
