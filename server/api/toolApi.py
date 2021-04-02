@@ -83,7 +83,7 @@ class GetUserLentTools(Resource):
 class GetUserBorrowedTools(Resource):
     def get(self, username):
         sql = """
-                    SELECT tool_owner, requested_tool, duration
+                    SELECT tool_owner, requested_tool, date_required, duration
                     FROM request
                     WHERE username = %s
                     """
