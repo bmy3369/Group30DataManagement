@@ -8,7 +8,8 @@ class AvTool extends Component {
     constructor(props) {
         super(props);
     this.state = {
-        myToolArgs: props.available
+        myToolArgs: props.available,
+        user: props.user
      }
     }
 
@@ -19,9 +20,10 @@ class AvTool extends Component {
                 <td align={'center'}>{this.state.myToolArgs[1]}</td>
                 <td align={'center'}>{this.state.myToolArgs[2]}</td>
                 <td align={'center'}>n/a</td>
-                <td align={'center'}>n/a</td>
-                <td align={'center'}>n/a</td>
-                <td align={'center'}><RequestButton requested_tool={this.state.myToolArgs[0]}
+                <td align={'center'}>{this.state.myToolArgs[3]}</td>
+                <td align={'center'}><RequestButton username={this.state.user}
+                                                    requested_tool={this.state.myToolArgs[0]}
+                                                    tool_owner={this.state.myToolArgs[3]}
                 ></RequestButton></td>
             </tr>
         )

@@ -17,6 +17,7 @@ class AvailableTools extends Component {
 
     updateAllTools = (allTools) => {
         this.setState({available: allTools})
+        this.setState({user: this.state.currentUser})
     }
 
     fetchAllTools = () => {
@@ -33,7 +34,7 @@ class AvailableTools extends Component {
 
     displayTool = (tool) => {
         return (
-            <AvTool available={tool}/>
+            <AvTool available={tool} user={this.state.currentUser}/>
         );
     }
 
@@ -61,8 +62,7 @@ class AvailableTools extends Component {
                              <th>Tool Name</th>
                              <th>Desc.</th>
                              <th>Categories</th>
-                             <th>Purchase Date</th>
-                             <th>Purchase Price</th>
+                            <th>Owned by</th>
                              <th>Request</th>
                         </tr>
                     </thead>

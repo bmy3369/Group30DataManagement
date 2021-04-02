@@ -17,9 +17,9 @@ class RequestButton extends Component {
         super(props);
 
         this.state = {
-            username: props.user,
+            username: props.username,
             requested_tool: props.requested_tool,
-            tool_owner: "",
+            tool_owner: "bmy",
             date_required: "",
             duration: "",
             modal: false
@@ -28,6 +28,7 @@ class RequestButton extends Component {
 
     toggle = () => {
         this.setState({modal: !this.state.modal})
+        /*
         if (this.state.modal === false) {
             this.setState({username: ""})
              this.setState({requested_tool: ""})
@@ -35,6 +36,7 @@ class RequestButton extends Component {
              this.setState({date_required: ""})
              this.setState({duration: ""})
         }
+        */
     }
     acceptTool = () => {
         const data = {
@@ -49,7 +51,8 @@ class RequestButton extends Component {
             headers: {Accept:'application/json', 'Content-Type':'application/json'},
             body: JSON.stringify(data)
         }
-        const getUrl = '/requestTool/' + this.state.requested_tool + "/" + this.state.username
+        const getUrl = '/requestTool/' + this.state.requested_tool + "/"
+            + this.state.username + "/" + this.state.tool_owner
         fetch( getUrl, reqOptions)
             .then(response => response.json())
             .then(
