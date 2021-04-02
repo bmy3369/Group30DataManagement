@@ -76,6 +76,7 @@ class GetUserLentTools(Resource):
                     FROM request
                     WHERE tool_owner = %s
                     AND status = 'Accepted'
+                    ORDER BY date_required asc
                     """
         return list(exec_get_all(sql, [username]))
 
@@ -86,6 +87,7 @@ class GetUserBorrowedTools(Resource):
                     SELECT tool_owner, requested_tool, date_required, duration
                     FROM request
                     WHERE username = %s
+                    ORDER BY date_required asc
                     """
         return list(exec_get_all(sql, [username]))
 
