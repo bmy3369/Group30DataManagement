@@ -21,6 +21,7 @@ api.add_resource(DenyTool, '/denyTool/<string:requested_tool>/<string:username>'
 api.add_resource(ReturnTool, '/returnTool/')
 api.add_resource(DeleteTool, '/deleteTool/<string:tool>')
 api.add_resource(AvailableTools, '/getAvailableTools/<string:username>')
+api.add_resource(RequestTool, '/requestTool/<string:requested_tool>/<string:username>')
 
 if __name__ == '__main__':
     print("Starting flask");

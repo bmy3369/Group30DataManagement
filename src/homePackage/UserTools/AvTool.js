@@ -1,6 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import React, {Component} from 'react'
+import RequestButton from "./RequestButton"
 
 
 class AvTool extends Component {
@@ -20,7 +21,8 @@ class AvTool extends Component {
                 <td align={'center'}>n/a</td>
                 <td align={'center'}>n/a</td>
                 <td align={'center'}>n/a</td>
-                <td align={'center'}>request</td>
+                <td align={'center'}><RequestButton requested_tool={this.state.myToolArgs[0]}
+                ></RequestButton></td>
             </tr>
         )
     }

@@ -134,3 +134,20 @@ class AvailableTools(Resource):
                 )
             """
         return list(exec_get_all(sql, [username]))
+
+class RequestTool(Resource):
+    def post(self, requested_tool, username):
+        parser = reqparse.RequestParser()
+        parser.add_argument('tool_owner', type=str)
+        parser.add_argument('date_required', type=str)
+        parser.add_argument('duration', type=str)
+        args = parser.parse_args()
+
+        tool_owner = args['tool_owner']
+        date_required = args['date_required']
+        duration = args['duration']
+        sql = """
+                            INSERT INTO tools (username, requested_tool, tool_owner, date_required, duration, status)
+                            VALUES (%s, %s, %s, %s, %s, 'Pending')
+                        """
+        exec_commit(sql, (username, requested_tool, tool_owner, date_required, duration))
