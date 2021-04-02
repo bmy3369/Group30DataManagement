@@ -119,3 +119,12 @@ class DeleteTool(Resource):
                     WHERE barcode = %s;                
                                 """
         exec_commit(sql, [tool, tool])
+
+class AvailableTools(Resource):
+    def get(self, username):
+        sql = """
+            SELECT barcode, name, description 
+            FROM tools
+            WHERE tool_owner = %s
+            """
+        return list(exec_get_all(sql, [username]))

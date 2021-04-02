@@ -9,6 +9,7 @@ import UserTools from "./UserTools";
 import UserRequests from "../../requestsPackage/UserRequests";
 import UserLentTools from "../../requestsPackage/UserLentTools"
 import BorrowedTools from "../../requestsPackage/UserBorrowedTools"
+import AvailableTools from "./AvailableTools"
 
 class UserMainPage extends Component {
     constructor (props) {
@@ -49,6 +50,11 @@ class UserMainPage extends Component {
                         onClick={() => this.toggle('4')}
                         >My Borrowed Tools</NavLink>
                     </NavItem>
+                    <NavItem>
+                        <NavLink className={classNames({active: this.state.activeTab === '5'})}
+                        onClick={() => this.toggle('5')}
+                        >Available Tools</NavLink>
+                    </NavItem>
                 </Nav>
 
                 <TabContent activeTab={this.state.activeTab}>
@@ -63,6 +69,9 @@ class UserMainPage extends Component {
                     </TabPane>
                     <TabPane tabId="4">
                         <BorrowedTools user = {this.state.currentUser}/>
+                    </TabPane>
+                    <TabPane tabId="5">
+                        <AvailableTools user = {this.state.currentUser}/>
                     </TabPane>
 
                 </TabContent>
