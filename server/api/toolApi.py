@@ -90,9 +90,13 @@ class AcceptTool(Resource):
         sql = """
                             UPDATE request 
                             SET status = 'Accepted'
-                            WHERE requested_tool = %s AND username = %s
+                            WHERE requested_tool = %s AND username = %s;
+                            
+                            UPDATE request
+                            SET status = 'Denied'
+                            WHERE requested_tool = %s AND username <> %s
                         """
-        exec_commit(sql, (requested_tool, username))
+        exec_commit(sql, (requested_tool, username, requested_tool, username))
 
 
 class DenyTool(Resource):
@@ -153,3 +157,61 @@ class DeleteTool(Resource):
                     WHERE barcode = %s;                
                                 """
         exec_commit(sql, [tool, tool])
+
+class AvailableTools(Resource):
+    def get(self, username):
+        sql = """
+            SELECT barcode, name, description, tool_owner 
+            FROM tools
+            WHERE tool_owner <> %s
+            AND SHAREABLE = true
+            AND barcode NOT IN
+                (
+                SELECT requested_tool
+                FROM request
+                WHERE status = 'Accepted'
+                )
+            AND barcode NOT IN
+                (
+                SELECT requested_tool
+                FROM request
+                WHERE status = 'Pending'
+                AND username = 'corey'
+                )
+            ORDER BY name
+            """
+        return list(exec_get_all(sql, [username]))
+
+class RequestTool(Resource):
+    def post(self, requested_tool, username, tool_owner):
+        parser = reqparse.RequestParser()
+        parser.add_argument('date_required', type=str)
+        parser.add_argument('duration', type=str)
+        args = parser.parse_args()
+
+        date_required = datetime.today()
+        duration = args['duration']
+        sql = """
+                            INSERT INTO request (username, requested_tool, tool_owner, date_required, duration, status)
+                            VALUES (%s, %s, %s, %s, %s, 'Pending')
+                        """
+        exec_commit(sql, (username, requested_tool, tool_owner, date_required, duration))
+
+class GetUserOutgoing(Resource):
+    def get(self, username):
+        sql = """
+                    SELECT tool_owner, requested_tool, duration
+                    FROM request
+                    WHERE username = %s and status = 'Pending'
+                    """
+        return list(exec_get_all(sql, [username]))
+
+
+class CancelRequest(Resource):
+    def post(self, username, requested_tool):
+        sql = """ 
+
+                    DELETE FROM request
+                    WHERE username = %s AND requested_tool = %s;
+        """
+        exec_commit(sql, [username, requested_tool])
