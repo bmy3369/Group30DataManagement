@@ -4,7 +4,6 @@ import React from 'react'
 import {
 Label, Modal, ModalHeader, ModalBody, Form, FormGroup, Input, ModalFooter, Button, ListGroup, ListGroupItem
 } from 'reactstrap'
-import EditCategories from "./EditCategories";
 
 class EditTool extends Component {
     constructor(props) {
