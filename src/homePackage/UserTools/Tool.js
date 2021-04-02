@@ -2,6 +2,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import React, {Component} from 'react'
 
+import DeleteTool from "./DeleteTool"
+
 class Tool extends Component {
     constructor(props) {
         super(props);
@@ -21,7 +23,7 @@ class Tool extends Component {
                 <td>n/a</td>
                 <td>{this.state.myToolArgs[4]}</td>
                 <td>edit</td>
-                <td>delete</td>
+                <td><DeleteTool tool={this.state.myToolArgs[0]}></DeleteTool></td>
             </tr>
         )
     }
