@@ -2,18 +2,21 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {Component} from "react/cjs/react.production.min";
 import React from 'react'
 import {
-Label, Modal, ModalHeader, ModalBody, Form, FormGroup,NavLink, Input, ModalFooter, Button
+    Label, Modal, ModalHeader, ModalBody, Form, FormGroup, NavLink, Input, ModalFooter, Button, ListGroup
 } from 'reactstrap'
 
 class AddTool extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            barcode: "",
             tool_name: "",
             description: "",
             purchase_date: "",
             purchase_price: "",
-            shareable: false,
+            shareable: true,
+            categories: [],
+            inputCategory: "",
             owner: props.user,
             modal: false,
         }
@@ -26,9 +29,17 @@ class AddTool extends Component {
              this.setState({description: ""})
              this.setState({purchase_date: ""})
              this.setState({purchase_price: ""})
-             this.setState({shareable: false})
+             this.setState({shareable: true})
         }
     }
+
+    getToolBarcode = () => {
+        fetch('/getLastTool/' +this.state.owner)
+            .then(response => response.json())
+            .then(jsonOutput =>
+            this.addToolCategory(jsonOutput))
+    }
+
     createTool = () => {
         const data = {
             name: this.state.tool_name,
@@ -46,14 +57,45 @@ class AddTool extends Component {
         fetch('/createTool/', reqOptions)
             .then(response => response.json())
             .then(
-                this.fetchData
+                this.getToolBarcode
             )
-        this.updateTool()
     }
-    updateTool = () => {
-        this.props.updateTable()
+    addToolCategory = (barcode) => {
+        console.log(this.state.categories)
+        for (let i=0; i < this.state.categories.length; i++) {
+            let addMe = this.state.categories[i]
+            const reqOptions = {
+                method: 'POST',
+                headers: {Accept: 'application/json', 'Content-Type': 'application/json'},
+            }
+            fetch('/addToolCategory/' + barcode +"/" +addMe, reqOptions)
+                .then(response => response.json())
+        }
+    }
+    addCategory = () => {
+        let cats = this.state.categories
+        cats.push(this.state.inputCategory)
+        this.setState({categories: cats})
+    }
+    removeCategory = (event) => {
+        let cats = this.state.categories
+        for(let i=0; i < cats.length; i++) {
+            let str = cats[i]
+            let eve = event.target.value
+            if (str === eve) {
+                cats.splice(i, 1);
+            }
+        }
+        this.setState({categories: cats})
     }
 
+    displayCategories = (category) => {
+        return (
+             <Label>{category}
+                <Button value={category} onClick={this.removeCategory}>Remove</Button>
+             </Label>
+        )
+    }
     updateProp = (event) => {
         if(event.target.id === "enteredName") {
             this.setState({tool_name: event.target.value})
@@ -64,8 +106,12 @@ class AddTool extends Component {
         }else if(event.target.id === "enteredPurchasePrice") {
             this.setState({purchase_price: event.target.value})
         }else if(event.target.id === "enteredShareable") {
-            this.setState({shareable: event.target.value})
+            let curVal = !this.state.shareable
+            this.setState({shareable: curVal})
         }
+    }
+    updateUserInput = (event) => {
+         this.setState({inputCategory: event.target.value})
     }
     submitForm = () => {
         this.createTool()
@@ -97,7 +143,15 @@ class AddTool extends Component {
                             </FormGroup>
                             <FormGroup>
                                 <Label>Shareable</Label>
-                                <Input type="checkbox" id="enteredShareable" value={this.state.shareable} onChange={this.updateProp}/>
+                                <Input type="checkbox" id="enteredShareable" value={this.state.shareable} checked={this.state.shareable} onChange={this.updateProp}/>
+                            </FormGroup>
+                            <FormGroup>
+                                <Label>Categories:</Label>
+                                 <ListGroup>
+                                    {this.state.categories.map(category => this.displayCategories(category))}
+                                    <Input type="text" id="inputText" value={this.state.inputCategory} onChange={this.updateUserInput}/>
+                                    <Button onClick={this.addCategory}>Add Category</Button>
+                                </ListGroup>
                             </FormGroup>
                         </Form>
                     </ModalBody>

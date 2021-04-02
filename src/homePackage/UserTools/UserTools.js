@@ -67,7 +67,6 @@ class UserTools extends Component {
                              <th>Categories</th>
                              <th>Purchase Date</th>
                              <th>Purchase Price</th>
-                             <th>Borrowable</th>
                              <th>Edit</th>
                              <th>Delete</th>
                         </tr>
