@@ -2,7 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {Component} from "react/cjs/react.production.min";
 import React from 'react'
 import {
-Label, Modal, ModalHeader, ModalBody, Form, FormGroup,NavLink, Input, ModalFooter, Button
+Label, Modal, ModalHeader, ModalBody, Form, FormGroup, Input, ModalFooter, Button, Text
 } from 'reactstrap'
 
 /**
@@ -19,7 +19,7 @@ class RequestButton extends Component {
         this.state = {
             username: props.username,
             requested_tool: props.requested_tool,
-            tool_owner: "bmy",
+            tool_owner: props.tool_owner,
             date_required: "",
             duration: "",
             modal: false
@@ -79,7 +79,7 @@ class RequestButton extends Component {
                     <ModalBody className={"m-4"}>
                         <Form>
                             <FormGroup>
-                                <Label>This will send a request to (PUT OWNER HERE)</Label>
+                                <Label >This will send a request to {this.state.tool_owner}</Label>
                             </FormGroup>
                             <FormGroup>
                                 <Label>Input number of days being requested:</Label>

@@ -2,7 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {Component} from "react/cjs/react.production.min";
 import React from 'react'
 import {
-Label, Modal, ModalHeader, ModalBody, Form, FormGroup,NavLink, Input, ModalFooter, Button
+Label, Modal, ModalHeader, ModalBody, Form, FormGroup, ModalFooter, Button
 } from 'reactstrap'
 
 /**
@@ -19,7 +19,7 @@ class CancelButton extends Component {
         this.state = {
             username: props.username,
             requested_tool: props.requested_tool,
-
+            owner: props.owner,
             modal: false
         }
     }
@@ -68,7 +68,7 @@ class CancelButton extends Component {
                     <ModalBody className={"m-4"}>
                         <Form>
                             <FormGroup>
-                                <Label>This will cancel your request to (PUT OWNER HERE)</Label>
+                                <Label>This will cancel your request to {this.state.owner}</Label>
                                 <Label>Are you sure about this?</Label>
                             </FormGroup>
                         </Form>

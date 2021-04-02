@@ -56,9 +56,13 @@ class AcceptTool(Resource):
         sql = """
                             UPDATE request 
                             SET status = 'Accepted'
-                            WHERE requested_tool = %s AND username = %s
+                            WHERE requested_tool = %s AND username = %s;
+                            
+                            UPDATE request
+                            SET status = 'Denied'
+                            WHERE requested_tool = %s AND username <> %s
                         """
-        exec_commit(sql, (requested_tool, username))
+        exec_commit(sql, (requested_tool, username, requested_tool, username))
 
 class DenyTool(Resource):
     def post(self, requested_tool, username):

@@ -2,7 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {Component} from "react/cjs/react.production.min";
 import React from 'react'
 import {
-Label, Modal, ModalHeader, ModalBody, Form, FormGroup,NavLink, Input, ModalFooter, Button
+Label, Modal, ModalHeader, ModalBody, Form, FormGroup,ModalFooter, Button
 } from 'reactstrap'
 
 /**
