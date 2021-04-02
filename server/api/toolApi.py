@@ -125,6 +125,12 @@ class AvailableTools(Resource):
         sql = """
             SELECT barcode, name, description 
             FROM tools
-            WHERE tool_owner = %s
+            WHERE tool_owner <> %s
+            AND barcode NOT IN
+                (
+                SELECT requested_tool
+                FROM request
+                WHERE status <> 'Accepted'
+                )
             """
         return list(exec_get_all(sql, [username]))

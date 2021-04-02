@@ -2,22 +2,21 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import React, {Component} from 'react'
 import {
-    Table, Button, Row, Input, Label, Col
+    Table, Row, Input, Label, Col
 } from 'reactstrap';
-import Tool from "./Tool";
-import AddTool from "./AddTool"
+import AvTool from "./AvTool";
 
 class AvailableTools extends Component {
     constructor(props) {
         super(props)
     this.state = {
         currentUser: props.user,
-        tools: [],
+        available: [],
      }
     }
 
     updateAllTools = (allTools) => {
-        this.setState({tools: allTools})
+        this.setState({available: allTools})
     }
 
     fetchAllTools = () => {
@@ -34,7 +33,7 @@ class AvailableTools extends Component {
 
     displayTool = (tool) => {
         return (
-            <Tool tools={tool}/>
+            <AvTool available={tool}/>
         );
     }
 
@@ -42,7 +41,6 @@ class AvailableTools extends Component {
         return (
             <div className="m-4">
                 <Row className="m-2">
-                     <AddTool user={this.state.currentUser} updateTable={this.fetchAllTools}/>
                     <Input className="m-2" type="searchType" id="search" placeholder="Search Params" />
                     <Col xs="auto" className="text-center">
                         <Label>Search Type</Label>
@@ -59,19 +57,17 @@ class AvailableTools extends Component {
                 <Table>
                     <thead>
                         <tr className="text-center">
-                            <th>Tool Name</th>
-                             <th>Barcode</th>
-                             <th>Desc</th>
+                            <th>Barcode</th>
+                             <th>Tool Name</th>
+                             <th>Desc.</th>
                              <th>Categories</th>
                              <th>Purchase Date</th>
                              <th>Purchase Price</th>
-                             <th>Borrowable</th>
-                             <th>Edit</th>
-                             <th>Delete</th>
+                             <th>Request</th>
                         </tr>
                     </thead>
                     <tbody className="text-left">
-                        {this.state.tools.map(tool => this.displayTool(tool))}
+                        {this.state.available.map(available => this.displayTool(available))}
                     </tbody>
                 </Table>
             </div>
