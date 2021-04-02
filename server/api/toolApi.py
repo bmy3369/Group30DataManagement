@@ -92,13 +92,7 @@ class GetUserBorrowedTools(Resource):
 
 # In progress
 class ReturnTool(Resource):
-    def post(self):
-        parser = reqparse.RequestParser()
-        parser.add_argument('username', type=str)
-        parser.add_argument('tool', type=str)
-
-        tool_owner = args['username']
-        tool_requested = args['tool']
+    def post(self, tool_owner, tool_requested):
         sql = """
                     DELETE FROM request
                     WHERE tool_owner = %s AND requested_tool = %s
