@@ -2,7 +2,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import React, {Component} from 'react'
 import {
-    Table, Row, Input, Label, Col
+
+    Table, Button, Row, Input, Label, Col, ListGroup
 } from 'reactstrap';
 import Tool from "./Tool";
 import AddTool from "./AddTool"
@@ -43,6 +44,7 @@ class UserTools extends Component {
             <div className="m-4">
                 <Row className="m-2">
                      <AddTool user={this.state.currentUser} updateTable={this.fetchAllTools}/>
+                    <Button onClick={this.fetchAllTools}>Refresh</Button>
                     <Input className="m-2" type="searchType" id="search" placeholder="Search Params" />
                     <Col xs="auto" className="text-center">
                         <Label>Search Type</Label>
@@ -59,8 +61,8 @@ class UserTools extends Component {
                 <Table>
                     <thead>
                         <tr className="text-center">
-                            <th>Tool Name</th>
-                             <th>Barcode</th>
+                            <th>Barcode</th>
+                             <th>Name</th>
                              <th>Desc</th>
                              <th>Categories</th>
                              <th>Purchase Date</th>

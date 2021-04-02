@@ -7,26 +7,14 @@ class BorrowedTool extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            currentUser: props.user,
             myBorrowedToolArgs: props.borrowedTools,
-            color: 'danger',
-            modal: false
-        }
-    }
-
-    /**
-     * Simple test function to make sure that program didn't hang up on returnTool
-     * Will delete later
-     */
-    toggle = () => {
-        this.setState({modal: !this.state.modal});
-        if (this.state.modal === false) {
-            this.setState({color: 'success'});
+            color: 'white'
         }
     }
 
     /**
      * Calls fetch to delete the request form the database as the tool is returned
-     * In Progress currently
      */
     returnTool = () => {
         const data = {
@@ -38,7 +26,8 @@ class BorrowedTool extends Component {
             headers: {Accept: 'application/json', 'Content-Type': 'application/json'},
             body: JSON.stringify(data)
         }
-        fetch('/returnTool/' + reqOptions)
+        const url = '/returnTool/' + this.state.myBorrowedToolArgs[0] + '/' + this.state.myBorrowedToolArgs[1] + '/' + this.state.currentUser
+        fetch(url, reqOptions)
             .then(response => response.json())
             .then(
                 this.fetchData
@@ -47,17 +36,27 @@ class BorrowedTool extends Component {
 
     submitForm = () => {
         this.returnTool()
-        this.toggle()
     }
+
+    componentDidMount() {
+        console.log('user: ' + this.state.currentUser)
+        const lendDate = new Date(this.state.myBorrowedToolArgs[2]);
+        const returnDate = new Date(lendDate.valueOf());
+        returnDate.setDate(returnDate.getDate() + parseInt(this.state.myBorrowedToolArgs[3]))
+        if (new Date() > returnDate) {
+            this.setState({color: 'red'});
+        }
+    }
+
 
     render() {
         return (
             <tr>
                 <td align={'center'}>{this.state.myBorrowedToolArgs[0]}</td>
                 <td align={'center'}>{this.state.myBorrowedToolArgs[1]}</td>
-                <td align={'center'}>n/a</td>
-                <td align={'center'}>{this.state.myBorrowedToolArgs[2]}</td>
-                <td align={'center'}><Button color={this.state.color} onClick={this.submitForm}>Return</Button></td>
+                <td bgcolor={this.state.color} align={'center'}>{this.state.myBorrowedToolArgs[2]}</td>
+                <td align={'center'}>{this.state.myBorrowedToolArgs[3]}</td>
+                <td align={'center'}><Button color={'danger'} onClick={this.submitForm}>Return</Button></td>
             </tr>
         )
     }
