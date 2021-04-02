@@ -130,12 +130,21 @@ class AvailableTools(Resource):
             SELECT barcode, name, description, tool_owner 
             FROM tools
             WHERE tool_owner <> %s
+            AND SHAREABLE = true
             AND barcode NOT IN
                 (
                 SELECT requested_tool
                 FROM request
-                WHERE status <> 'Accepted'
+                WHERE status = 'Accepted'
                 )
+            AND barcode NOT IN
+                (
+                SELECT requested_tool
+                FROM request
+                WHERE status = 'Pending'
+                AND username = 'corey'
+                )
+            ORDER BY name
             """
         return list(exec_get_all(sql, [username]))
 
