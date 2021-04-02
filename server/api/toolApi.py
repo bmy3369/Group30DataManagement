@@ -25,19 +25,21 @@ class EditTool(Resource):
         parser.add_argument('description', type=str)
         parser.add_argument('purchase_date', type=str)
         parser.add_argument('purchase_price', type=str)
+        parser.add_argument('shareable', type=bool)
         args = parser.parse_args()
 
         tool_name = args['name']
         description = args['description']
         purchase_date = datetime.today()
         purchase_price = args['purchase_price']
+        shareable = args['shareable']
 
         sql = """
             UPDATE tools
-            SET name = %s, description = %s, purchase_date = %s, purchase_price = %s
+            SET name = %s, description = %s, purchase_date = %s, purchase_price = %s, shareable = %s
             WHERE barcode = %s
         """
-        exec_commit(sql, (tool_name, description, purchase_date, purchase_price, barcode))
+        exec_commit(sql, (tool_name, description, purchase_date, purchase_price, shareable, barcode))
 
 
 class GetToolCategories(Resource):
@@ -49,6 +51,23 @@ class GetToolCategories(Resource):
         """
         return list(exec_get_all(sql, [barcode]))
 
+
+class AddCategoryToTool(Resource):
+    def post(self, barcode, type):
+        sql = """
+            INSERT INTO categories (barcode, category_type)
+            VALUES(%s, %s)
+         """
+        exec_commit(sql, (barcode, type))
+
+
+class RemoveCategoryFromTool(Resource):
+    def post(self, barcode, type):
+        sql = """
+            DELETE FROM categories
+            WHERE category_type = %s AND barcode = %s
+        """
+        exec_commit(sql, (type, barcode))
 
 class CreateTool(Resource):
     def post(self):
@@ -69,9 +88,19 @@ class CreateTool(Resource):
         owner = args['owner']
         sql = """
                     INSERT INTO tools (name, description, tool_owner, purchase_price, purchase_date, shareable)
-                    VALUES (%s, %s, %s, %s, %s, %s)
+                    VALUES (%s, %s, %s, %s, %s, %s);
                 """
         exec_commit(sql, (tool_name, description, owner, purchase_price, purchase_date, shareable))
+
+
+class GetLastTool(Resource):
+    def get(self, username):
+        sql = """
+            SELECT MAX(BARCODE) 
+            FROM tools 
+            WHERE tool_owner = %s
+        """
+        return exec_get_one(sql, [username])
 
 
 class GetUserRequests(Resource):

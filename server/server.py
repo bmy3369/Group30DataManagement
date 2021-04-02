@@ -22,7 +22,9 @@ api.add_resource(ReturnTool, '/returnTool/')
 api.add_resource(DeleteTool, '/deleteTool/<string:tool>')
 api.add_resource(EditTool, '/editTool/<string:barcode>')
 api.add_resource(GetToolCategories, '/getToolCategories/<string:barcode>')
-
+api.add_resource(RemoveCategoryFromTool, '/removeToolCategory/<string:barcode>/<string:type>')
+api.add_resource(AddCategoryToTool, '/addToolCategory/<string:barcode>/<string:type>')
+api.add_resource(GetLastTool, '/getLastTool/<string:username>')
 if __name__ == '__main__':
     print("Starting flask");
     app.run(debug=True),  # starts Flask

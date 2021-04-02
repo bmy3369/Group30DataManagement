@@ -52,7 +52,6 @@ class Tool extends Component {
                 <td align={'center'}>{this.state.listCategories}</td>
                 <td align={'center'}>{this.state.myToolArgs[3]}</td>
                 <td align={'center'}>{this.state.myToolArgs[4]}</td>
-                <td align={'center'}>{this.state.myToolArgs[5]}</td>
                 <td align={'center'}><EditTool tool={this.state.myToolArgs} categories={this.state.categories}/></td>
                 <td align={'center'}><DeleteTool tool={this.state.myToolArgs[0]}></DeleteTool></td>
             </tr>
