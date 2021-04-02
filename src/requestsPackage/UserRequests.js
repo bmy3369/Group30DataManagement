@@ -6,7 +6,7 @@ import {
 } from 'reactstrap';
 import Request from "./Request";
 
-class UserTools extends Component {
+class UserRequests extends Component {
     constructor(props) {
         super(props)
     this.state = {
@@ -74,4 +74,4 @@ class UserTools extends Component {
     }
 
 }
-export default UserTools;
+export default UserRequests;
