@@ -110,8 +110,12 @@ class ReturnTool(Resource):
 
 class DeleteTool(Resource):
     def post(self, tool):
-        sql = """
-                                    DELETE FROM tools 
-                                    WHERE barcode = %s
+        sql = """ 
+        
+                    DELETE FROM request
+                    WHERE requested_tool = %s;                            
+                                    
+                    DELETE FROM tools 
+                    WHERE barcode = %s;                
                                 """
-        exec_commit(sql, (tool,))
+        exec_commit(sql, [tool, tool])
