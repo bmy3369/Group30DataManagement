@@ -26,20 +26,11 @@ class AcceptTool extends Component {
 
     toggle = () => {
         this.setState({modal: !this.state.modal});
-        /*
-        if (this.state.modal === false) {
-            this.setState({username: ""})
-             this.setState({requested_tool: ""})
-             this.setState({duration_requested: ""})
-             this.setState({date_required: ""})
-        }*/
     }
     acceptTool = () => {
         const data = {
             username: this.state.username,
             requested_tool: this.state.requested_tool,
-            /*duration_requested: this.state.duration_requested,
-            date_required: this.state.date_required*/
         }
         const reqOptions = {
             method: 'POST',

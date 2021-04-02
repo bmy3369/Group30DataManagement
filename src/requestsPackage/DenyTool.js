@@ -2,7 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {Component} from "react/cjs/react.production.min";
 import React from 'react'
 import {
-Label, Modal, ModalHeader, ModalBody, Form, FormGroup,NavLink, Input, ModalFooter, Button
+Label, Modal, ModalHeader, ModalBody, Form, FormGroup, ModalFooter, Button
 } from 'reactstrap'
 
 class DenyTool extends Component {
@@ -39,13 +39,7 @@ class DenyTool extends Component {
                 this.fetchData
             )
     }
-    /*
-    updateProp = (event) => {
-        if(event.target.id === "enteredReturnDate") {
-            this.setState({date_required: event.target.value})
-        }
-    }
-     */
+
     submitForm = () => {
         this.denyTool()
         this.toggle()
