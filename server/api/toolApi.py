@@ -4,7 +4,7 @@ from flask_restful import reqparse
 
 from .db_utils import *
 
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 
 
 class GetUserTools(Resource):
@@ -16,6 +16,7 @@ class GetUserTools(Resource):
                 ORDER BY name 
                 """
         return list(exec_get_all(sql, [username]))
+
 
 
 class EditTool(Resource):
@@ -93,6 +94,7 @@ class AcceptTool(Resource):
                         """
         exec_commit(sql, (requested_tool, username))
 
+
 class DenyTool(Resource):
     def post(self, requested_tool, username):
         sql = """
@@ -106,10 +108,11 @@ class DenyTool(Resource):
 class GetUserLentTools(Resource):
     def get(self, username):
         sql = """
-                    SELECT username, requested_tool, duration
+                    SELECT username, requested_tool, date_required, duration
                     FROM request
                     WHERE tool_owner = %s
                     AND status = 'Accepted'
+                    ORDER BY date_required asc
                     """
         return list(exec_get_all(sql, [username]))
 
@@ -117,28 +120,26 @@ class GetUserLentTools(Resource):
 class GetUserBorrowedTools(Resource):
     def get(self, username):
         sql = """
-                    SELECT tool_owner, requested_tool, duration
+                    SELECT tool_owner, requested_tool, date_required, duration
                     FROM request
                     WHERE username = %s
+                    AND status = 'Accepted'
+                    ORDER BY date_required asc
                     """
         return list(exec_get_all(sql, [username]))
 
 
-
-# In progress
 class ReturnTool(Resource):
-    def post(self):
-        parser = reqparse.RequestParser()
-        parser.add_argument('username', type=str)
-        parser.add_argument('tool', type=str)
-
-        tool_owner = args['username']
-        tool_requested = int(args['tool'])
+    def post(self, tool_owner, tool_requested, username):
         sql = """
                     DELETE FROM request
-                    WHERE tool_owner = %s AND requested_tool = %d
+                    WHERE tool_owner = %s AND requested_tool = %s;
+                    
+                    INSERT INTO returned_tool (barcode, username, date_returned)
+                    VALUES (%s, %s, %s)
                     """
-        exec_commit(sql, (tool_owner, tool_requested))
+        date_returned = date.today()
+        exec_commit(sql, (tool_owner, tool_requested, tool_requested, username, date_returned))
 
 
 class DeleteTool(Resource):
