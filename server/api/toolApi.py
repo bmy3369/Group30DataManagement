@@ -10,11 +10,44 @@ from datetime import datetime, timedelta
 class GetUserTools(Resource):
     def get(self, username):
         sql = """
-            SELECT barcode, name, description 
-            FROM tools
-            WHERE tool_owner = %s
-            """
+                SELECT barcode, name, description, tool_owner, purchase_price, shareable
+                FROM tools
+                WHERE tool_owner = %s
+                ORDER BY name 
+                """
         return list(exec_get_all(sql, [username]))
+
+
+class EditTool(Resource):
+    def put(self, barcode):
+        parser = reqparse.RequestParser()
+        parser.add_argument('name', type=str)
+        parser.add_argument('description', type=str)
+        parser.add_argument('purchase_date', type=str)
+        parser.add_argument('purchase_price', type=str)
+        args = parser.parse_args()
+
+        tool_name = args['name']
+        description = args['description']
+        purchase_date = datetime.today()
+        purchase_price = args['purchase_price']
+
+        sql = """
+            UPDATE tools
+            SET name = %s, description = %s, purchase_date = %s, purchase_price = %s
+            WHERE barcode = %s
+        """
+        exec_commit(sql, (tool_name, description, purchase_date, purchase_price, barcode))
+
+
+class GetToolCategories(Resource):
+    def get(self, barcode):
+        sql = """
+            SELECT category_type
+            FROM categories
+            WHERE barcode = %s
+        """
+        return list(exec_get_all(sql, [barcode]))
 
 
 class CreateTool(Resource):
@@ -31,7 +64,7 @@ class CreateTool(Resource):
         tool_name = args['name']
         description = args['description']
         purchase_date = datetime.today()
-        purchase_price = args['purchase_date']
+        purchase_price = args['purchase_price']
         shareable = args['shareable']
         owner = args['owner']
         sql = """
