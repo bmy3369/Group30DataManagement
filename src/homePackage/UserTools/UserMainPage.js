@@ -10,6 +10,7 @@ import UserRequests from "../../requestsPackage/UserRequests";
 import UserLentTools from "../../requestsPackage/UserLentTools"
 import BorrowedTools from "../../requestsPackage/UserBorrowedTools"
 import AvailableTools from "./AvailableTools"
+import UserOutgoing from "../../requestsPackage/UserOutgoing"
 
 class UserMainPage extends Component {
     constructor (props) {
@@ -43,16 +44,21 @@ class UserMainPage extends Component {
                     <NavItem>
                         <NavLink className={classNames({active: this.state.activeTab === '3'})}
                         onClick={() => this.toggle('3')}
+                        >My Outgoing Requests</NavLink>
+                    </NavItem>
+                    <NavItem>
+                        <NavLink className={classNames({active: this.state.activeTab === '4'})}
+                        onClick={() => this.toggle('4')}
                         >My Lent Tools</NavLink>
                     </NavItem>
                      <NavItem>
-                        <NavLink className={classNames({active: this.state.activeTab === '4'})}
-                        onClick={() => this.toggle('4')}
+                        <NavLink className={classNames({active: this.state.activeTab === '5'})}
+                        onClick={() => this.toggle('5')}
                         >My Borrowed Tools</NavLink>
                     </NavItem>
                     <NavItem>
-                        <NavLink className={classNames({active: this.state.activeTab === '5'})}
-                        onClick={() => this.toggle('5')}
+                        <NavLink className={classNames({active: this.state.activeTab === '6'})}
+                        onClick={() => this.toggle('6')}
                         >Available Tools</NavLink>
                     </NavItem>
                 </Nav>
@@ -65,12 +71,15 @@ class UserMainPage extends Component {
                         <UserRequests user={this.state.currentUser}/>
                     </TabPane>
                     <TabPane tabId="3">
-                        <UserLentTools user = {this.state.currentUser}/>
+                        <UserOutgoing user={this.state.currentUser}/>
                     </TabPane>
                     <TabPane tabId="4">
-                        <BorrowedTools user = {this.state.currentUser}/>
+                        <UserLentTools user = {this.state.currentUser}/>
                     </TabPane>
                     <TabPane tabId="5">
+                        <BorrowedTools user = {this.state.currentUser}/>
+                    </TabPane>
+                    <TabPane tabId="6">
                         <AvailableTools user = {this.state.currentUser}/>
                     </TabPane>
 

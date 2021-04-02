@@ -149,3 +149,12 @@ class RequestTool(Resource):
                             VALUES (%s, %s, %s, %s, %s, 'Pending')
                         """
         exec_commit(sql, (username, requested_tool, tool_owner, date_required, duration))
+
+class GetUserOutgoing(Resource):
+    def get(self, username):
+        sql = """
+                    SELECT tool_owner, requested_tool, duration
+                    FROM request
+                    WHERE username = %s and status = 'Pending'
+                    """
+        return list(exec_get_all(sql, [username]))

@@ -4,9 +4,9 @@ import React, {Component} from 'react'
 import {
     Table, Row, Input, Label, Col
 } from 'reactstrap';
-import Request from "./Request";
+import Outgoing from "./Outgoing";
 
-class UserRequests extends Component {
+class UserOutgoing extends Component {
     constructor(props) {
         super(props)
     this.state = {
@@ -20,7 +20,7 @@ class UserRequests extends Component {
     }
 
     fetchAllTools = () => {
-        fetch('/getRequests/' +this.state.currentUser)
+        fetch('/getOutgoing/' +this.state.currentUser)
             .then(
                 response => response.json()
             ).then(jsonOutput => {
@@ -33,7 +33,7 @@ class UserRequests extends Component {
 
     displayRequests = (requests) => {
         return (
-            <Request requests={requests}/>
+            <Outgoing requests={requests}/>
         );
     }
 
@@ -57,12 +57,11 @@ class UserRequests extends Component {
                 <Table>
                     <thead>
                         <tr className="text-center">
-                            <th>Requestee</th>
+                            <th>Tool Owner</th>
                              <th>Tool Requested</th>
                              <th>Date Required</th>
                              <th>Duration</th>
-                             <th>Accept</th>
-                             <th>Deny</th>
+                             <th>Cancel</th>
                         </tr>
                     </thead>
                     <tbody className="text-left">
@@ -74,4 +73,4 @@ class UserRequests extends Component {
     }
 
 }
-export default UserRequests;
+export default UserOutgoing;
