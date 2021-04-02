@@ -18,7 +18,7 @@ api.add_resource(GetUserLentTools, '/getLentTools/<string:username>')
 api.add_resource(GetUserBorrowedTools, '/getBorrowedTools/<string:username>')
 api.add_resource(AcceptTool, '/acceptTool/<string:requested_tool>')
 api.add_resource(DenyTool, '/denyTool/<string:requested_tool>')
-api.add_resource(ReturnTool, '/returnTool/<string:tool_owner>/<string:tool_requested>')
+api.add_resource(ReturnTool, '/returnTool/<string:tool_owner>/<string:tool_requested>/<string:username>')
 
 if __name__ == '__main__':
     print("Starting flask")

@@ -3,6 +3,7 @@ from flask_restful import request
 from flask_restful import reqparse
 
 from .db_utils import *
+from datetime import date
 
 
 class GetUserTools(Resource):
@@ -95,9 +96,13 @@ class GetUserBorrowedTools(Resource):
 
 # In progress
 class ReturnTool(Resource):
-    def post(self, tool_owner, tool_requested):
+    def post(self, tool_owner, tool_requested, username):
         sql = """
                     DELETE FROM request
-                    WHERE tool_owner = %s AND requested_tool = %s
+                    WHERE tool_owner = %s AND requested_tool = %s;
+                    
+                    INSERT INTO returned_tool (barcode, username, date_returned)
+                    VALUES (%s, %s, %s)
                     """
-        exec_commit(sql, (tool_owner, tool_requested))
+        date_returned = date.today()
+        exec_commit(sql, (tool_owner, tool_requested, tool_requested, username, date_returned))

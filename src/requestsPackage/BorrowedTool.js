@@ -7,6 +7,7 @@ class BorrowedTool extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            currentUser: props.user,
             myBorrowedToolArgs: props.borrowedTools,
             color: 'white'
         }
@@ -25,7 +26,7 @@ class BorrowedTool extends Component {
             headers: {Accept: 'application/json', 'Content-Type': 'application/json'},
             body: JSON.stringify(data)
         }
-        const url = '/returnTool/' + this.state.myBorrowedToolArgs[0] + '/' + this.state.myBorrowedToolArgs[1]
+        const url = '/returnTool/' + this.state.myBorrowedToolArgs[0] + '/' + this.state.myBorrowedToolArgs[1] + '/' + this.state.currentUser
         fetch(url, reqOptions)
             .then(response => response.json())
             .then(
@@ -38,6 +39,7 @@ class BorrowedTool extends Component {
     }
 
     componentDidMount() {
+        console.log('user: ' + this.state.currentUser)
         const lendDate = new Date(this.state.myBorrowedToolArgs[2]);
         const returnDate = new Date(lendDate.valueOf());
         returnDate.setDate(returnDate.getDate() + parseInt(this.state.myBorrowedToolArgs[3]))

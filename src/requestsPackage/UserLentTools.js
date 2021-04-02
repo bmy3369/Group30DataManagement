@@ -7,8 +7,7 @@ import {
 import LentTool from "./LentTool";
 
 /**
- * this most likely needs to be changed, it's mostly copied from the UserRequests page, it is updated in the render
- * function but I don't know what to do with the smaller functions
+ * Displays the tools the User has lent out to other users
  */
 class UserLentTools extends Component {
     constructor(props) {
