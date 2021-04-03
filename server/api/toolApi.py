@@ -42,6 +42,117 @@ class EditTool(Resource):
         """
         exec_commit(sql, (tool_name, description, purchase_date, purchase_price, shareable, barcode))
 
+class SearchForAvailableCategories(Resource):
+    def get(self, username, category):
+        sql = """
+            SELECT tool.barcode, tool.name, tool.description, tool.tool_owner
+            FROM categories as cats
+            INNER JOIN tools as tool on cats.barcode = tool.barcode
+            WHERE tool.tool_owner <> %s
+            AND cats.category_type = %s
+            AND SHAREABLE = true
+            AND tool.barcode NOT IN
+                (
+                SELECT requested_tool
+                FROM request
+                WHERE status = 'Accepted'
+                )
+            AND tool.barcode NOT IN
+                (
+                SELECT requested_tool
+                FROM request
+                WHERE status = 'Pending'
+                AND username = %s
+                )
+            ORDER BY name
+        """
+        return exec_get_all(sql, [username, category, username])
+
+class SearchForAvailableBarcodes(Resource):
+    def get(self, username, barcode):
+        sql = """
+            SELECT barcode, name, description, tool_owner
+            FROM tools
+            WHERE tool_owner <> %s
+            AND barcode = %s
+            AND SHAREABLE = true
+            AND barcode NOT IN
+                (
+                SELECT requested_tool
+                FROM request
+                WHERE status = 'Accepted'
+                )
+            AND barcode NOT IN
+                (
+                SELECT requested_tool
+                FROM request
+                WHERE status = 'Pending'
+                AND username = %s
+                )
+                ORDER BY name
+        """
+        return exec_get_all(sql, [username, barcode, username])
+
+class SearchForAvailableNames(Resource):
+    def get(self, username, name):
+        sql = """
+            SELECT barcode, name, description, tool_owner
+            FROM tools
+            WHERE tool_owner <> %s
+            AND name = %s
+            AND SHAREABLE = true
+            AND barcode NOT IN
+                (
+                SELECT requested_tool
+                FROM request
+                WHERE status = 'Accepted'
+                )
+            AND barcode NOT IN
+                (
+                SELECT requested_tool
+                FROM request
+                WHERE status = 'Pending'
+                AND username = %s
+                )
+            ORDER BY name
+        """
+        return exec_get_all(sql, [username, name, username])
+
+
+
+class SearchForCategories(Resource):
+    def get(self, username, category):
+        sql = """
+            SELECT tool.barcode, tool.name, tool.description, tool.purchase_date, tool.purchase_price, tool.shareable
+            FROM categories as cats
+            INNER JOIN tools as tool ON cats.barcode = tool.barcode
+            WHERE cats.category_type = %s and tool.tool_owner = %s
+            ORDER BY name
+        """
+        return exec_get_all(sql, [category, username])
+
+
+class SearchForBarcodes(Resource):
+    def get(self, username, barcode):
+        sql = """
+            SELECT barcode, name, description, purchase_date, purchase_price, shareable
+            FROM tools
+            WHERE barcode = %s and tool_owner = %s
+            ORDER BY name
+        """
+        return exec_get_all(sql, [barcode, username])
+
+
+class SearchForNames(Resource):
+    def get(self, username, name):
+        sql = """
+            SELECT barcode, name, description, purchase_date, purchase_price, shareable
+            FROM tools
+            WHERE name = %s and tool_owner = %s
+            ORDER BY name
+         """
+        return exec_get_all(sql, [name, username])
+
 
 class GetToolCategories(Resource):
     def get(self, barcode):
