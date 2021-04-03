@@ -87,7 +87,8 @@ class RequestButton extends Component {
                             </FormGroup>
                             <FormGroup>
                                 <Label>Input what date the tool is needed by:</Label>
-                                <Input type="text" id="enteredDateRequired" value={this.state.date_required} onChange={this.updateProp}/>
+                                <Input type="text" id="enteredDateRequired" value={this.state.date_required}
+                                       placeholder="Format: YEAR/MO/DA" onChange={this.updateProp}/>
                             </FormGroup>
                         </Form>
                     </ModalBody>

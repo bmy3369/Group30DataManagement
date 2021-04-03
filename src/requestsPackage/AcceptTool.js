@@ -2,7 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {Component} from "react/cjs/react.production.min";
 import React from 'react'
 import {
-Label, Modal, ModalHeader, ModalBody, Form, FormGroup,ModalFooter, Button
+Label, Modal, ModalHeader, ModalBody, Form, FormGroup,ModalFooter, Button, Input
 } from 'reactstrap'
 
 /**
@@ -44,11 +44,7 @@ class AcceptTool extends Component {
                 this.fetchData
             )
     }
-    updateProp = (event) => {
-        if(event.target.id === "enteredReturnDate") {
-            this.setState({date_required: event.target.value})
-        }
-    }
+
     submitForm = () => {
         this.acceptTool()
         this.toggle()
@@ -63,10 +59,6 @@ class AcceptTool extends Component {
                         <Form>
                             <FormGroup>
                                 <Label>By accepting, you agree to lend this user the specified tool.</Label>
-                            </FormGroup>
-                            <FormGroup>
-                                <Label>Set Return date:</Label>
-
                             </FormGroup>
                         </Form>
                     </ModalBody>

@@ -205,11 +205,11 @@ class AvailableTools(Resource):
                 SELECT requested_tool
                 FROM request
                 WHERE status = 'Pending'
-                AND username = 'corey'
+                AND username = %s
                 )
             ORDER BY name
             """
-        return list(exec_get_all(sql, [username]))
+        return list(exec_get_all(sql, [username, username]))
 
 class RequestTool(Resource):
     def post(self, requested_tool, username, tool_owner):
@@ -218,7 +218,7 @@ class RequestTool(Resource):
         parser.add_argument('duration', type=str)
         args = parser.parse_args()
 
-        date_required = datetime.today()
+        date_required = args['date_required']
         duration = args['duration']
         sql = """
                             INSERT INTO request (username, requested_tool, tool_owner, date_required, duration, status)
