@@ -2,7 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import React, {Component} from 'react'
 import {
-    Table, Row, Input, Label, Col
+    Table, Row, Input, Label, Col, Button
 } from 'reactstrap';
 import Outgoing from "./Outgoing";
 
@@ -41,6 +41,7 @@ class UserOutgoing extends Component {
     render () {
         return (
             <div className="m-4">
+                <Button color={'success'} onClick={this.fetchAllTools}>Refresh</Button>
                  <header className="text-center">Requested Tools</header>
                 <Table>
                     <thead>
