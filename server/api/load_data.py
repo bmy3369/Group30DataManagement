@@ -1,8 +1,9 @@
-from datetime import date
+from datetime import datetime, timedelta
 from flask_restful import Resource
 from flask_restful import request
 from flask_restful import reqparse
 from db_utils import *
+import random
 
 
 def getLastBarcode(username):
@@ -16,7 +17,7 @@ def getLastBarcode(username):
 def giveCategories(barcode, categories):
     amt = random.randint(0,4)
     for i in range(amt):
-        randCat = random.randint(0, categories.length-1)
+        randCat = random.randint(0, len(categories)-1)
         cat = categories[randCat]
         addCategory(barcode, cat)
 
@@ -34,15 +35,17 @@ def giveTool(username, tool, categories):
            VALUES (%s, %s, %s, %s, %s, %s);
            """
     tool.append(username)
+    print(tool)
     exec_commit(sql, tool)
     barcode = getLastBarcode(username)
-    giveCatergories(barcode, categories)
+    giveCategories(barcode, categories)
+    tool.pop(5)
 
 
 def giveTools(username, tools, categories):
         amt = random.randint(5, 25)
         for i in range(amt):
-            randTool = random.randint(0, tools.length -1)
+            randTool = random.randint(0, len(tools) -1)
             tool = tools[randTool]
             giveTool(username, tool, categories)
 
@@ -57,8 +60,8 @@ def read_users(filename):
                     INSERT INTO users (username, password, first_name, last_name, email, creation_date)
                     VALUES (%s, %s, %s, %s, %s, %s)
                 """
-        creation_date = datetime.today()
-        exec_commit(sql, (username, hash_password(password), first_name, last_name, email, creation_date))
+        date = datetime.today()
+        exec_commit(sql, (username, hash_password(password), first_name, last_name, email, date))
         giveTools(username, tools, cats)
 
 def getCategories(filename):
@@ -72,7 +75,7 @@ def getTools(filename):
     tool_file = open(filename, "r")
     tools = []
     for line in tool_file:
-        barcode, name, description, purchase_price, purchase_date, shareable = line.split(",")
+        name, description, purchase_price, purchase_date, shareable = line.split(",")
 
         newTool = [name, description, purchase_price, purchase_date, shareable]
         tools.append(newTool)
