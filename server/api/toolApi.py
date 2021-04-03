@@ -31,7 +31,7 @@ class EditTool(Resource):
 
         tool_name = args['name']
         description = args['description']
-        purchase_date = datetime.today()
+        purchase_date = args['purchase_date']
         purchase_price = args['purchase_price']
         shareable = args['shareable']
 
@@ -194,7 +194,7 @@ class CreateTool(Resource):
 
         tool_name = args['name']
         description = args['description']
-        purchase_date = datetime.today()
+        purchase_date = args['purchase_date']
         purchase_price = args['purchase_price']
         shareable = args['shareable']
         owner = args['owner']
@@ -289,14 +289,16 @@ class ReturnTool(Resource):
 class DeleteTool(Resource):
     def post(self, tool):
         sql = """ 
+                    DELETE FROM categories
+                    WHERE barcode = %s;        
         
                     DELETE FROM request
                     WHERE requested_tool = %s;                            
                                     
                     DELETE FROM tools 
-                    WHERE barcode = %s;                
+                    WHERE barcode = %s;               
                                 """
-        exec_commit(sql, [tool, tool])
+        exec_commit(sql, [tool, tool, tool])
 
 class AvailableTools(Resource):
     def get(self, username):

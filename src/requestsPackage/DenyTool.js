@@ -10,7 +10,7 @@ class DenyTool extends Component {
         super(props);
 
         this.state = {
-            username: props.user,
+            username: props.username,
             requested_tool: props.requested_tool,
             date_required: "",
             modal: false
