@@ -2,6 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import React, {Component} from 'react'
 import {
+    Button,
     Table
 } from 'reactstrap';
 import Request from "./Request";
@@ -40,6 +41,7 @@ class UserRequests extends Component {
     render () {
         return (
             <div className="m-4">
+                <Button color={'success'} onClick={this.fetchAllTools}>Refresh</Button>
                  <header className="text-center">Requested Tools</header>
                 <Table>
                     <thead>
