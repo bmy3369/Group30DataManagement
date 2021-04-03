@@ -2,7 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import React, {Component} from 'react'
 import {
-    Table, Row, Input, Label, Col
+    Table
 } from 'reactstrap';
 import Request from "./Request";
 
@@ -40,19 +40,6 @@ class UserRequests extends Component {
     render () {
         return (
             <div className="m-4">
-                <Row className="m-2">
-                    <Input className="m-2" type="searchType" id="search" placeholder="Search Params" />
-                    <Col xs="auto" className="text-center">
-                        <Label>Search Type</Label>
-                    </Col>
-                    <Col>
-                        <Input className="m-2" type="select" name="Search For">
-                        <option>name</option>
-                         <option>barcode</option>
-                         <option>category</option>
-                     </Input>
-                    </Col>
-                </Row>
                  <header className="text-center">Requested Tools</header>
                 <Table>
                     <thead>
