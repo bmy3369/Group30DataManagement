@@ -17,7 +17,7 @@ class Outgoing extends Component {
             <tr >
                 <td align={'center'}>{this.state.myRequestArgs[0]}</td>
                 <td align={'center'}>{this.state.myRequestArgs[1]}</td>
-                <td align={'center'}>not JSON serializable smh</td>
+                <td align={'center'}>{this.state.myRequestArgs[3]}</td>
                 <td align={'center'}>{this.state.myRequestArgs[2]}</td>
                 <td align={'center'}><CancelButton username={this.state.user}
                                                    requested_tool={this.state.myRequestArgs[1]}

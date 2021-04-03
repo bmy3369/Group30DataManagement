@@ -2,7 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {Component} from "react/cjs/react.production.min";
 import React from 'react'
 import {
-    Label, Modal, ModalHeader, ModalBody, Form, FormGroup, NavLink, Input, ModalFooter, Button, ListGroup
+    Label, Modal, ModalHeader, ModalBody, Form, FormGroup, Input, ModalFooter, Button, ListGroup
 } from 'reactstrap'
 
 class AddTool extends Component {
@@ -135,11 +135,13 @@ class AddTool extends Component {
                             </FormGroup>
                             <FormGroup>
                                 <Label>Purchase Date</Label>
-                                <Input type="text" id="enteredPurchaseDate" value={this.state.purchase_date} onChange={this.updateProp}/>
+                                <Input type="text" id="enteredPurchaseDate" value={this.state.purchase_date}
+                                       placeholder="Format: YEAR/MO/DA" onChange={this.updateProp}/>
                             </FormGroup>
                             <FormGroup>
                                 <Label>Purchase Price</Label>
-                                <Input type="text" id="enteredPurchasePrice" value={this.state.purchase_price} onChange={this.updateProp}/>
+                                <Input type="text" id="enteredPurchasePrice" value={this.state.purchase_price}
+                                       placeholder="Format: $00.00" onChange={this.updateProp}/>
                             </FormGroup>
                             <FormGroup>
                                 <Label>Shareable</Label>
