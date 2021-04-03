@@ -10,7 +10,7 @@ from datetime import date, datetime, timedelta
 class GetUserTools(Resource):
     def get(self, username):
         sql = """
-                SELECT barcode, name, description, tool_owner, purchase_price, shareable
+                SELECT barcode, name, description, purchase_date, purchase_price, shareable
                 FROM tools
                 WHERE tool_owner = %s
                 ORDER BY name 
@@ -107,7 +107,7 @@ class GetLastTool(Resource):
 class GetUserRequests(Resource):
     def get(self, username):
         sql = """
-                    SELECT username, requested_tool, duration
+                    SELECT username, requested_tool, duration, date_required
                     FROM request
                     WHERE tool_owner = %s and status = 'Pending'
                     """
@@ -229,7 +229,7 @@ class RequestTool(Resource):
 class GetUserOutgoing(Resource):
     def get(self, username):
         sql = """
-                    SELECT tool_owner, requested_tool, duration
+                    SELECT tool_owner, requested_tool, duration, date_required
                     FROM request
                     WHERE username = %s and status = 'Pending'
                     """

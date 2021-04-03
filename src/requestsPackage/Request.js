@@ -17,7 +17,7 @@ class Request extends Component {
             <tr >
                 <td align={'center'}>{this.state.myRequestArgs[0]}</td>
                 <td align={'center'}>{this.state.myRequestArgs[1]}</td>
-                <td align={'center'}>n/a</td>
+                <td align={'center'}>{this.state.myRequestArgs[3]}</td>
                 <td align={'center'}>{this.state.myRequestArgs[2]}</td>
                 <td align={'center'}><AcceptTool requested_tool={this.state.myRequestArgs[1]}
                                                  username={this.state.myRequestArgs[0]}
