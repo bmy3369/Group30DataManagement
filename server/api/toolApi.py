@@ -10,7 +10,7 @@ from datetime import date, datetime, timedelta
 class GetUserTools(Resource):
     def get(self, username):
         sql = """
-                SELECT barcode, name, description, tool_owner, purchase_price, shareable
+                SELECT barcode, name, description, purchase_date, purchase_price, shareable
                 FROM tools
                 WHERE tool_owner = %s
                 ORDER BY name 
@@ -41,6 +41,39 @@ class EditTool(Resource):
             WHERE barcode = %s
         """
         exec_commit(sql, (tool_name, description, purchase_date, purchase_price, shareable, barcode))
+
+
+class SearchForCategories(Resource):
+    def get(self, username, category):
+        sql = """
+            SELECT tool.barcode, tool.name, tool.description, tool.purchase_date, tool.purchase_price, tool.shareable
+            FROM categories as cats
+            INNER JOIN tools as tool ON cats.barcode = tool.barcode
+            WHERE cats.category_type = %s and tool.tool_owner = %s
+             ORDER BY name
+        """
+        return exec_get_all(sql, [category, username])
+
+
+class SearchForBarcodes(Resource):
+    def get(self, username, barcode):
+        sql = """
+            SELECT barcode, name, description, purchase_date, purchase_price, shareable
+            FROM tools
+            WHERE barcode = %s and tool_owner = %s
+        """
+        return exec_get_all(sql, [barcode, username])
+
+
+class SearchForNames(Resource):
+    def get(self, username, name):
+        sql = """
+            SELECT barcode, name, description, purchase_date, purchase_price, shareable
+            FROM tools
+            WHERE name = %s and tool_owner = %s
+            ORDER BY name
+         """
+        return exec_get_all(sql, [name, username])
 
 
 class GetToolCategories(Resource):

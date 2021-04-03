@@ -29,6 +29,10 @@ api.add_resource(GetToolCategories, '/getToolCategories/<string:barcode>')
 api.add_resource(RemoveCategoryFromTool, '/removeToolCategory/<string:barcode>/<string:type>')
 api.add_resource(AddCategoryToTool, '/addToolCategory/<string:barcode>/<string:type>')
 api.add_resource(GetLastTool, '/getLastTool/<string:username>')
+api.add_resource(SearchForCategories, '/searchCategory/<string:username>/<string:category>')
+api.add_resource(SearchForBarcodes, '/searchBarcode/<string:username>/<string:barcode>')
+api.add_resource(SearchForNames, '/searchName/<string:username>/<string:name>')
+
 if __name__ == '__main__':
     print("Starting flask")
     app.run(debug=True),  # starts Flask
