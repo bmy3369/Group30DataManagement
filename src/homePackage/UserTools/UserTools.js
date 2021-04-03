@@ -28,6 +28,7 @@ class UserTools extends Component {
             .then(
                 response => response.json()
             ).then(jsonOutput => {
+                this.setState({tools: []})
                 this.updateAllTools(jsonOutput)
         })
     }
