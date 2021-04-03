@@ -15,7 +15,7 @@ class UserTools extends Component {
         currentUser: props.user,
         tools: [],
         searchParam: "",
-        searchType: "category"
+        searchType: "category",
      }
     }
 
@@ -44,7 +44,6 @@ class UserTools extends Component {
         this.setState({searchParam: event.target.value})
     }
     searchUpdate = (event) => {
-        console.log(event.target.value)
         this.setState({searchType: event.target.value})
     }
 
@@ -60,7 +59,10 @@ class UserTools extends Component {
     }
 
     search = () => {
-        if (this.state.searchType === "category") {
+        if (this.state.searchParam === "") {
+            this.fetchAllTools()
+        }
+        else if (this.state.searchType === "category") {
             this.fetchSearch('/searchCategory/')
         } else if (this.state.searchType === "barcode") {
             this.fetchSearch('/searchBarcode/')
@@ -74,10 +76,9 @@ class UserTools extends Component {
             <div className="m-4">
                 <Row className="m-2">
                      <AddTool user={this.state.currentUser} updateTable={this.fetchAllTools}/>
-                    <Button onClick={this.fetchAllTools}>Refresh</Button>
                     <Input className="m-2" type="searchType" id="search" placeholder="Search Params" value={this.state.searchParam} onChange={this.updateSearchParam}/>
-
                     <Button onClick={this.search}>Search</Button>
+
                     <Col xs="auto" className="text-center">
                         <Label>Search Type</Label>
                     </Col>
