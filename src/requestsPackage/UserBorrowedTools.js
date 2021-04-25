@@ -24,6 +24,10 @@ class BorrowedTools extends Component {
         this.setState({borrowedTools: allTools})
     }
 
+    updateTop10 = (allTools) => {
+        this.setState({topBorrowed: allTools})
+    }
+
     fetchAllTools = () => {
         fetch('/getBorrowedTools/' + this.state.currentUser)
             .then(
@@ -38,7 +42,7 @@ class BorrowedTools extends Component {
             .then(
                 response => response.json()
             ).then(jsonOutput => {
-            this.updateAllTools(jsonOutput)
+            this.updateTop10(jsonOutput)
         })
     }
 
@@ -55,7 +59,7 @@ class BorrowedTools extends Component {
 
     displayTop10 = (currentUser, topBorrowed) => {
         return (
-            <TopBorrowed user={currentUser} borrowedTools={topBorrowed}/>
+            <TopBorrowed user={currentUser} topBorrowed={topBorrowed}/>
         )
     }
 
@@ -69,12 +73,10 @@ class BorrowedTools extends Component {
                         <th>Tool Owner</th>
                         <th>Tool Borrowed</th>
                         <th>Times Borrowed</th>
-                        <th>.</th>
-                        <th>.</th>
                     </tr>
                     </thead>
                     <tbody className="text-left">
-                    {this.state.borrowedTools.map(borrowedTools => this.displayTools(this.state.currentUser, borrowedTools))}
+                    {this.state.topBorrowed.map(topBorrowed => this.displayTop10(this.state.currentUser, topBorrowed))}
                     </tbody>
                 </Table>
                 <Button color={'success'} onClick={this.fetchAllTools}>Refresh</Button>

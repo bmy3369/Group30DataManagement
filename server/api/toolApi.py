@@ -361,9 +361,11 @@ class CancelRequest(Resource):
 class Top10Borrowed(Resource):
     def get(self, username):
         sql = """
-                    SELECT username, barcode, COUNT(barcode) as times_borrowed
-                    FROM return_tool
+                    SELECT barcode, COUNT(*) as c
+                    FROM returned_tool
                     WHERE username = %s
+                    GROUP BY barcode
+                    ORDER BY c DESC
+                    LIMIT 10
                             """
-        date_returned = date.today()
-        exec_commit(sql, (tool_owner, tool_requested, tool_requested, username, date_returned))
+        return list(exec_get_all(sql, [username]))
