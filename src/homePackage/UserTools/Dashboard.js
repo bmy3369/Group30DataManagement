@@ -1,46 +1,39 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import React, {Component} from 'react'
-import {
-
-    Table, Button, Row, Input, Label, Col, ListGroup
-} from 'reactstrap';
-import Tool from "./Tool";
-import AddTool from "./AddTool"
 
 class UserTools extends Component {
     constructor(props) {
         super(props)
         this.state = {
             currentUser: props.user,
-            tools: [],
-            searchParam: "",
-            searchType: "category",
+            toolCount: 0
         }
     }
 
-    updateAllTools = (allTools) => {
-        this.setState({tools: allTools})
+    updateToolCount = (count) => {
+        this.setState({toolCount: count})
     }
 
-    fetchAllTools = () => {
-        fetch('/getTools/' + this.state.currentUser)
+    fetchToolCount = () => {
+        fetch('/getToolCount/' + this.state.currentUser)
             .then(
                 response => response.json()
             ).then(jsonOutput => {
-            this.setState({tools: []})
-            this.updateAllTools(jsonOutput)
+            this.updateToolCount(jsonOutput)
+            console.log(jsonOutput)
         })
     }
 
     componentDidMount() {
-        this.fetchAllTools()
+        this.fetchToolCount()
+        console.log(this.state.toolCount)
     }
 
     render() {
         return (
             <div className="m-4">
-                <h2 className="text-center">Your Tools Available: </h2>
+                <h2 className="text-center">Your Tools Available: this.state.toolCount</h2>
                 <h2 className="text-center">Lent Tools: </h2>
                 <h2 className="text-center">Borrowed Tools: </h2>
             </div>

@@ -357,3 +357,13 @@ class CancelRequest(Resource):
                     WHERE username = %s AND requested_tool = %s;
         """
         exec_commit(sql, [username, requested_tool])
+
+
+class GetToolCount(Resource):
+    def get(self, username):
+        sql = """
+                  SELECT COUNT(*)
+                  FROM tools
+                  WHERE tool_owner = %s AND shareable = true 
+        """
+        return exec_get_one(sql, [username])
