@@ -16,9 +16,10 @@ class TopBorrowed extends Component {
     render() {
         return (
             <tr>
-                <td align={'center'}>uhhh wip</td>
-                <td align={'center'}>{this.state.myTop10Args[0]}</td>
                 <td align={'center'}>{this.state.myTop10Args[1]}</td>
+                <td align={'center'}>{this.state.myTop10Args[2]}</td>
+                <td align={'center'}>{this.state.myTop10Args[0]}</td>
+                <td align={'center'}>{this.state.myTop10Args[3]}</td>
             </tr>
         )
     }

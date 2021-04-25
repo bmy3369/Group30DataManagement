@@ -72,6 +72,7 @@ class BorrowedTools extends Component {
                     <tr className="text-center">
                         <th>Tool Owner</th>
                         <th>Tool Borrowed</th>
+                        <th>Tool Name</th>
                         <th>Times Borrowed</th>
                     </tr>
                     </thead>

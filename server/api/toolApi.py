@@ -361,10 +361,11 @@ class CancelRequest(Resource):
 class Top10Borrowed(Resource):
     def get(self, username):
         sql = """
-                    SELECT barcode, COUNT(*) as c
-                    FROM returned_tool
-                    WHERE username = %s
-                    GROUP BY barcode
+                    SELECT t.name, t.tool_owner, r.barcode, COUNT(*) as c
+                    FROM returned_tool r, tools t
+                    WHERE r.username = %s
+                    AND r.barcode = t.barcode
+                    GROUP BY t.name, t.tool_owner, r.barcode
                     ORDER BY c DESC
                     LIMIT 10
                             """
