@@ -16,7 +16,8 @@ api.add_resource(GetUserTools, '/getTools/<string:username>')
 api.add_resource(GetUserRequests, '/getRequests/<string:username>')
 api.add_resource(GetUserLentTools, '/getLentTools/<string:username>')
 api.add_resource(GetUserBorrowedTools, '/getBorrowedTools/<string:username>')
-api.add_resource(ReturnTool, '/returnTool/<string:tool_owner>/<string:tool_requested>/<string:username>')
+api.add_resource(ReturnTool, '/returnTool/<string:tool_owner>/<string:tool_requested>/<string:username>'
+                             '/<string:duration>')
 api.add_resource(AcceptTool, '/acceptTool/<string:requested_tool>/<string:username>')
 api.add_resource(DenyTool, '/denyTool/<string:requested_tool>/<string:username>')
 api.add_resource(DeleteTool, '/deleteTool/<string:tool>')
@@ -36,6 +37,8 @@ api.add_resource(SearchForAvailableCategories, '/searchAvailableCategory/<string
 api.add_resource(SearchForAvailableBarcodes, '/searchAvailableBarcode/<string:username>/<string:barcode>')
 api.add_resource(SearchForAvailableNames, '/searchAvailableName/<string:username>/<string:name>')
 api.add_resource(Top10Borrowed, '/getTopBorrowed/<string:username>')
+api.add_resource(Top10Lent, '/getTopLent/<string:username>')
+
 
 
 if __name__ == '__main__':
