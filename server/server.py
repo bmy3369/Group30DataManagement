@@ -35,6 +35,8 @@ api.add_resource(SearchForNames, '/searchName/<string:username>/<string:name>')
 api.add_resource(SearchForAvailableCategories, '/searchAvailableCategory/<string:username>/<string:category>')
 api.add_resource(SearchForAvailableBarcodes, '/searchAvailableBarcode/<string:username>/<string:barcode>')
 api.add_resource(SearchForAvailableNames, '/searchAvailableName/<string:username>/<string:name>')
+api.add_resource(Top10Borrowed, '/getTopBorrowed/<string:username>')
+
 
 if __name__ == '__main__':
     print("Starting flask")

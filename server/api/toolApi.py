@@ -357,3 +357,13 @@ class CancelRequest(Resource):
                     WHERE username = %s AND requested_tool = %s;
         """
         exec_commit(sql, [username, requested_tool])
+
+class Top10Borrowed(Resource):
+    def get(self, username):
+        sql = """
+                    SELECT username, barcode, COUNT(barcode) as times_borrowed
+                    FROM return_tool
+                    WHERE username = %s
+                            """
+        date_returned = date.today()
+        exec_commit(sql, (tool_owner, tool_requested, tool_requested, username, date_returned))
