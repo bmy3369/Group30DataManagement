@@ -274,16 +274,16 @@ class GetUserBorrowedTools(Resource):
 
 
 class ReturnTool(Resource):
-    def post(self, tool_owner, tool_requested, username):
+    def post(self, tool_owner, tool_requested, username, duration):
         sql = """
                     DELETE FROM request
                     WHERE tool_owner = %s AND requested_tool = %s;
                     
-                    INSERT INTO returned_tool (barcode, username, date_returned)
-                    VALUES (%s, %s, %s)
+                    INSERT INTO returned_tool (barcode, username, date_returned, duration)
+                    VALUES (%s, %s, %s, %s)
                     """
         date_returned = date.today()
-        exec_commit(sql, (tool_owner, tool_requested, tool_requested, username, date_returned))
+        exec_commit(sql, (tool_owner, tool_requested, tool_requested, username, date_returned, duration))
 
 
 class DeleteTool(Resource):
@@ -357,3 +357,29 @@ class CancelRequest(Resource):
                     WHERE username = %s AND requested_tool = %s;
         """
         exec_commit(sql, [username, requested_tool])
+
+class Top10Borrowed(Resource):
+    def get(self, username):
+        sql = """
+                    SELECT t.name, t.tool_owner, r.barcode, COUNT(*) as c
+                    FROM returned_tool r, tools t
+                    WHERE r.username = %s
+                    AND r.barcode = t.barcode
+                    GROUP BY t.name, t.tool_owner, r.barcode
+                    ORDER BY c DESC
+                    LIMIT 10
+                            """
+        return list(exec_get_all(sql, [username]))
+
+class Top10Lent(Resource):
+    def get(self, username):
+        sql = """
+                    SELECT t.name, r.barcode, COUNT(*) as c, t.purchase_date, SUM(r.duration)
+                    FROM returned_tool r, tools t
+                    WHERE t.tool_owner = %s
+                    AND r.barcode = t.barcode
+                    GROUP BY t.name, r.barcode, t.purchase_date
+                    ORDER BY c DESC
+                    LIMIT 10
+                            """
+        return list(exec_get_all(sql, [username]))

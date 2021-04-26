@@ -5,6 +5,7 @@ import {
     Button, Table, Row, Input, Label, Col
 } from 'reactstrap';
 import BorrowedTool from "./BorrowedTool";
+import TopBorrowed from "./TopBorrowed";
 
 /**
  * Displays the tools that the user has Borrowed from other users
@@ -15,11 +16,16 @@ class BorrowedTools extends Component {
         this.state = {
             currentUser: props.user,
             borrowedTools: [],
+            topBorrowed: []
         }
     }
 
     updateAllTools = (allTools) => {
         this.setState({borrowedTools: allTools})
+    }
+
+    updateTop10 = (allTools) => {
+        this.setState({topBorrowed: allTools})
     }
 
     fetchAllTools = () => {
@@ -31,8 +37,18 @@ class BorrowedTools extends Component {
         })
     }
 
+    fetchTop10 = () => {
+        fetch('/getTopBorrowed/' + this.state.currentUser)
+            .then(
+                response => response.json()
+            ).then(jsonOutput => {
+            this.updateTop10(jsonOutput)
+        })
+    }
+
     componentDidMount() {
         this.fetchAllTools()
+        this.fetchTop10()
     }
 
     displayTools = (currentUser, borrowedTools) => {
@@ -41,9 +57,29 @@ class BorrowedTools extends Component {
         );
     }
 
+    displayTop10 = (currentUser, topBorrowed) => {
+        return (
+            <TopBorrowed user={currentUser} topBorrowed={topBorrowed}/>
+        )
+    }
+
     render() {
         return (
             <div className="m-4">
+                <header className="text-center">Top 10 Most Frequently Borrowed Tools</header>
+                <Table>
+                    <thead>
+                    <tr className="text-center">
+                        <th>Tool Owner</th>
+                        <th>Tool Borrowed</th>
+                        <th>Tool Name</th>
+                        <th>Times Borrowed</th>
+                    </tr>
+                    </thead>
+                    <tbody className="text-left">
+                    {this.state.topBorrowed.map(topBorrowed => this.displayTop10(this.state.currentUser, topBorrowed))}
+                    </tbody>
+                </Table>
                 <Button color={'success'} onClick={this.fetchAllTools}>Refresh</Button>
                 <header className="text-center">Borrowed Tools</header>
                 <Table>
