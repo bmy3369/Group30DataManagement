@@ -2,15 +2,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {Component} from "react/cjs/react.production.min";
 import React from 'react'
 import {
-Label, Modal, ModalHeader, ModalBody, Form, FormGroup, Input, ModalFooter, Button, Text
+Label, Modal, ModalHeader, ModalBody, Form, FormGroup, Input, ModalFooter, Button, Text,
+
+     Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle, CardGroup
 } from 'reactstrap'
-
-/**
-import React, { useState } from "react";
-import DatePicker from "react-datepicker";
-
-import "react-datepicker/dist/react-datepicker.css";
-*/
 
 class RequestButton extends Component {
     constructor(props) {
@@ -22,22 +17,21 @@ class RequestButton extends Component {
             tool_owner: props.tool_owner,
             date_required: "",
             duration: "",
-            modal: false
+            modal: false,
+            nestedModal: false,
         }
+
     }
+
 
     toggle = () => {
         this.setState({modal: !this.state.modal})
-        /*
-        if (this.state.modal === false) {Canc
-            this.setState({username: ""})
-             this.setState({requested_tool: ""})
-             this.setState({tool_owner: ""})
-             this.setState({date_required: ""})
-             this.setState({duration: ""})
-        }
-        */
     }
+
+    toggleNested = () => {
+        this.setState({nestedModal: !this.state.nestedModal})
+    }
+
     acceptTool = () => {
         const data = {
             username: this.state.username,
@@ -70,6 +64,17 @@ class RequestButton extends Component {
         this.acceptTool()
         this.toggle()
     }
+
+    onClick = () =>  {
+        this.submitForm()
+        this.toggleNested()
+    }
+
+    toggleAll = () => {
+        this.toggle()
+        this.toggleNested()
+    }
+
     render() {
         return (
             <div>
@@ -93,7 +98,48 @@ class RequestButton extends Component {
                         </Form>
                     </ModalBody>
                     <ModalFooter>
-                        <Button color="primary" onClick={this.submitForm}>Request Tool</Button>
+                    <Button color="primary" onClick={() => {this.toggleNested();}}>Request Tool</Button>
+                        <Modal isOpen={this.state.nestedModal} toggle={this.toggleNested}>
+                        <ModalHeader>Sucess!</ModalHeader>
+                        <ModalBody>
+                            Request sent to {this.state.tool_owner}.
+                        </ModalBody>
+                            <ModalBody>
+                            Based on your request, users also requested:
+                        </ModalBody>
+                            <CardGroup>
+                            <Card>
+                                <CardBody>
+                                    <CardTitle tag="h5">tool name</CardTitle>
+                                    <CardSubtitle tag="h6" className="mb-2 text-muted">owner</CardSubtitle>
+                                    <CardText>tool description will go here.</CardText>
+                                    <Button color="primary">Request</Button>
+                                </CardBody>
+                            </Card>
+                            <Card>
+                                <CardBody>
+                                    <CardTitle tag="h5">tool name</CardTitle>
+                                    <CardSubtitle tag="h6" className="mb-2 text-muted">owner</CardSubtitle>
+                                    <CardText>tool description will go here.</CardText>
+                                    <Button color="primary">Request</Button>
+                                </CardBody>
+                            </Card>
+                            <Card>
+                                <CardBody>
+                                    <CardTitle tag="h5">tool name</CardTitle>
+                                    <CardSubtitle tag="h6" className="mb-2 text-muted">owner</CardSubtitle>
+                                    <CardText>tool description will go here.</CardText>
+                                    <Button color="primary">Request</Button>
+                                </CardBody>
+                            </Card>
+                    </CardGroup>
+                        <ModalFooter>
+
+
+
+                        <Button color="secondary" onClick={this.toggleAll}>No Thanks</Button>
+                        </ModalFooter>
+                        </Modal>
                     </ModalFooter>
                 </Modal>
             </div>
