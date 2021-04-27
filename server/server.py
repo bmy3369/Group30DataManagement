@@ -36,6 +36,9 @@ api.add_resource(SearchForAvailableCategories, '/searchAvailableCategory/<string
 api.add_resource(SearchForAvailableBarcodes, '/searchAvailableBarcode/<string:username>/<string:barcode>')
 api.add_resource(SearchForAvailableNames, '/searchAvailableName/<string:username>/<string:name>')
 api.add_resource(GetToolCount, '/getToolCount/<string:username>')
+api.add_resource(GetLentCount, '/getLentCount/<string:username>')
+api.add_resource(GetBorrowedCount, '/getBorrowedCount/<string:username>')
+
 
 if __name__ == '__main__':
     print("Starting flask")
