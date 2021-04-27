@@ -2,7 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import React, {Component} from 'react'
 import {
-    Table, Row, Input, Label, Col, Button
+    Table, Row, Input, Label, Col, Button,
 } from 'reactstrap';
 import AvTool from "./AvTool";
 import AddTool from "./AddTool";
@@ -15,6 +15,10 @@ class AvailableTools extends Component {
         available: [],
         searchParam: "",
         searchType: "category",
+
+        pageIndex: 0,
+        pageSize: 50,
+        pageTotal: 0
      }
     }
 
@@ -71,6 +75,25 @@ class AvailableTools extends Component {
             }
         }
     }
+
+    handlePrevPageClick(event) {
+        this.setState(prevState => ({
+        pageIndex: prevState.pageIndex > 0 ? prevState.pageIndex - 1 : 0
+        }));
+        this.fetchAllTools();
+    }
+
+    handleNextPageClick(event) {
+        this.setState(prevState => ({
+        pageIndex:
+        prevState.pageIndex <
+        Math.floor(prevState.available.length / prevState.pageSize)
+          ? prevState.pageIndex + 1
+          : prevState.pageIndex
+    }));
+        this.fetchAllTools();
+  }
+
     render () {
         return (
             <div className="m-4">
@@ -89,7 +112,13 @@ class AvailableTools extends Component {
                      </Input>
                     </Col>
                 </Row>
-                 <header className="text-center">Tool List</header>
+                <Button color="primary"
+                        onClick={event => this.handlePrevPageClick(event)}
+                        >Previous</Button>
+                <Button color="primary"
+                        onClick={event => this.handleNextPageClick(event)}
+                        >Next</Button>
+                <Label>Page {this.state.pageIndex + 1} of {Math.ceil(this.state.available.length / this.state.pageSize)}</Label>
                 <Table>
                     <thead>
                         <tr className="text-center">
@@ -102,7 +131,12 @@ class AvailableTools extends Component {
                         </tr>
                     </thead>
                     <tbody className="text-left">
-                        {this.state.available.map(available => this.displayTool(available))}
+                        {this.state.available
+                            .slice(
+                                this.state.pageIndex * this.state.pageSize,
+                                this.state.pageIndex * this.state.pageSize + this.state.pageSize
+                            )
+                            .map(available => this.displayTool(available))}
                     </tbody>
                 </Table>
             </div>
