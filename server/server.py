@@ -38,7 +38,7 @@ api.add_resource(SearchForAvailableBarcodes, '/searchAvailableBarcode/<string:us
 api.add_resource(SearchForAvailableNames, '/searchAvailableName/<string:username>/<string:name>')
 api.add_resource(Top10Borrowed, '/getTopBorrowed/<string:username>')
 api.add_resource(Top10Lent, '/getTopLent/<string:username>')
-
+api.add_resource(GetRecommendation, '/getRecommended/<string:username>')
 
 
 if __name__ == '__main__':

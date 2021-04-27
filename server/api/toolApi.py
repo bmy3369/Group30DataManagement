@@ -383,3 +383,23 @@ class Top10Lent(Resource):
                     LIMIT 10
                             """
         return list(exec_get_all(sql, [username]))
+
+class GetRecommendation(Resource):
+    def get(self, username):
+        sql = """
+                    SELECT barcode, name, description, tool_owner
+                    FROM tools
+                    WHERE tool_owner <> %s 
+                    LIMIT 3
+                            """
+        return list(exec_get_all(sql, [username]))
+
+'''
+        list = list(exec_get_all(sql, [username]))
+        if list.length == 3: return list
+        else:
+            sql = """
+            
+            """
+            return list(exec_get_all(sql, [username]))
+'''

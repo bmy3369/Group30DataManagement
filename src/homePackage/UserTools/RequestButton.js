@@ -2,10 +2,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {Component} from "react/cjs/react.production.min";
 import React from 'react'
 import {
-Label, Modal, ModalHeader, ModalBody, Form, FormGroup, Input, ModalFooter, Button, Text,
+Label, Modal, ModalHeader, ModalBody, Form, FormGroup, Input, ModalFooter, Button, Text, Table,
 
      Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle, CardGroup
 } from 'reactstrap'
+import AvTool from "./AvTool"
+import RecTool from "./RecTool"
 
 class RequestButton extends Component {
     constructor(props) {
@@ -19,6 +21,10 @@ class RequestButton extends Component {
             duration: "",
             modal: false,
             nestedModal: false,
+            rectools: [],
+            tool_1: [],
+            tool_2: [],
+            tool_3: [],
         }
 
     }
@@ -53,6 +59,28 @@ class RequestButton extends Component {
                 this.fetchData
             )
     }
+
+    displayRec = (tool) => {
+        return (
+            <RecTool available={tool} user={this.state.currentUser}/>
+        );
+    }
+
+
+    updateRec = (list) => {
+        this.setState({rectools: list})
+    }
+
+    fetchRecs = () => {
+        fetch('/getRecommended/' + this.state.username)
+            .then(
+                response => response.json()
+            ).then(jsonOutput => {
+                this.updateRec(jsonOutput)
+        })
+    }
+
+
     updateProp = (event) => {
         if(event.target.id === "enteredDuration") {
             this.setState({duration: event.target.value})
@@ -62,12 +90,6 @@ class RequestButton extends Component {
     }
     submitForm = () => {
         this.acceptTool()
-        this.toggle()
-    }
-
-    onClick = () =>  {
-        this.submitForm()
-        this.toggleNested()
     }
 
     toggleAll = () => {
@@ -98,45 +120,21 @@ class RequestButton extends Component {
                         </Form>
                     </ModalBody>
                     <ModalFooter>
-                    <Button color="primary" onClick={() => {this.toggleNested();}}>Request Tool</Button>
+                    <Button color="primary" onClick={() => {this.toggleNested();
+                    this.submitForm();
+                    this.fetchRecs()}}>Request Tool</Button>
                         <Modal isOpen={this.state.nestedModal} toggle={this.toggleNested}>
-                        <ModalHeader>Sucess!</ModalHeader>
+                        <ModalHeader>Success!</ModalHeader>
                         <ModalBody>
                             Request sent to {this.state.tool_owner}.
                         </ModalBody>
                             <ModalBody>
                             Based on your request, users also requested:
                         </ModalBody>
-                            <CardGroup>
-                            <Card>
-                                <CardBody>
-                                    <CardTitle tag="h5">tool name</CardTitle>
-                                    <CardSubtitle tag="h6" className="mb-2 text-muted">owner</CardSubtitle>
-                                    <CardText>tool description will go here.</CardText>
-                                    <Button color="primary">Request</Button>
-                                </CardBody>
-                            </Card>
-                            <Card>
-                                <CardBody>
-                                    <CardTitle tag="h5">tool name</CardTitle>
-                                    <CardSubtitle tag="h6" className="mb-2 text-muted">owner</CardSubtitle>
-                                    <CardText>tool description will go here.</CardText>
-                                    <Button color="primary">Request</Button>
-                                </CardBody>
-                            </Card>
-                            <Card>
-                                <CardBody>
-                                    <CardTitle tag="h5">tool name</CardTitle>
-                                    <CardSubtitle tag="h6" className="mb-2 text-muted">owner</CardSubtitle>
-                                    <CardText>tool description will go here.</CardText>
-                                    <Button color="primary">Request</Button>
-                                </CardBody>
-                            </Card>
-                    </CardGroup>
                         <ModalFooter>
-
-
-
+                            <CardGroup>
+                                {this.state.rectools.map(rectool => this.displayRec(rectool))}
+                            </CardGroup>
                         <Button color="secondary" onClick={this.toggleAll}>No Thanks</Button>
                         </ModalFooter>
                         </Modal>
