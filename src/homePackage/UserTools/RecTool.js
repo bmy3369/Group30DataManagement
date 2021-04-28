@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import React, {Component} from 'react'
 import RequestButton from "./RequestButton"
 import{ Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle, CardGroup } from 'reactstrap'
-
+import RecomReqButton from "./RecomReqButton"
 
 class RecTool extends Component {
     constructor(props) {
@@ -44,16 +44,18 @@ class RecTool extends Component {
     }
 
     render () {
+
         return (
             <Card>
                 <CardBody>
                     <CardTitle tag="h5">{this.state.myToolArgs[1]} - {this.state.myToolArgs[0]}</CardTitle>
                     <CardSubtitle tag="h6" className="mb-2 text-muted">{this.state.myToolArgs[3]}</CardSubtitle>
-                    <CardText>{this.state.myToolArgs[2]}</CardText>
-                    <RequestButton username={this.state.user}
+                    <CardText>{this.state.myToolArgs[2]}
+                    <RecomReqButton  username={this.state.user}
                                                     requested_tool={this.state.myToolArgs[0]}
                                                     tool_owner={this.state.myToolArgs[3]}
-                ></RequestButton>
+                ></RecomReqButton>
+                    </CardText>
                 </CardBody>
             </Card>
         )
