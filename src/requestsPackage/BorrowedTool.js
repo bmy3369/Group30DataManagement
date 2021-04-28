@@ -20,6 +20,7 @@ class BorrowedTool extends Component {
         const data = {
             tool_owner: this.state.myBorrowedToolArgs[0],
             tool_requested: this.state.myBorrowedToolArgs[1],
+            date_acquired: this.state.myBorrowedToolArgs[2],
             duration: this.state.myBorrowedToolArgs[3]
         }
         const reqOptions = {
@@ -27,7 +28,7 @@ class BorrowedTool extends Component {
             headers: {Accept: 'application/json', 'Content-Type': 'application/json'},
             body: JSON.stringify(data)
         }
-        const url = '/returnTool/' + this.state.myBorrowedToolArgs[0] + '/' + this.state.myBorrowedToolArgs[1] + '/' + this.state.currentUser + '/' + this.state.myBorrowedToolArgs[3]
+        const url = '/returnTool/' + this.state.myBorrowedToolArgs[0] + '/' + this.state.myBorrowedToolArgs[1] + '/' + this.state.currentUser + '/' + this.state.myBorrowedToolArgs[3] + '/' + this.state.myBorrowedToolArgs[2]
         fetch(url, reqOptions)
             .then(response => response.json())
             .then(

@@ -17,7 +17,7 @@ api.add_resource(GetUserRequests, '/getRequests/<string:username>')
 api.add_resource(GetUserLentTools, '/getLentTools/<string:username>')
 api.add_resource(GetUserBorrowedTools, '/getBorrowedTools/<string:username>')
 api.add_resource(ReturnTool, '/returnTool/<string:tool_owner>/<string:tool_requested>/<string:username>'
-                             '/<string:duration>')
+                             '/<string:duration>/<string:date_year>/<string:date_mo>/<string:date_day>')
 api.add_resource(AcceptTool, '/acceptTool/<string:requested_tool>/<string:username>')
 api.add_resource(DenyTool, '/denyTool/<string:requested_tool>/<string:username>')
 api.add_resource(DeleteTool, '/deleteTool/<string:tool>')

@@ -276,16 +276,18 @@ class GetUserBorrowedTools(Resource):
 
 
 class ReturnTool(Resource):
-    def post(self, tool_owner, tool_requested, username, duration):
+    def post(self, tool_owner, tool_requested, username, duration, date_year, date_mo, date_day):
         sql = """
                     DELETE FROM request
                     WHERE tool_owner = %s AND requested_tool = %s;
                     
-                    INSERT INTO returned_tool (barcode, username, date_returned, duration)
-                    VALUES (%s, %s, %s, %s)
+                    INSERT INTO returned_tool (barcode, username, date_returned, duration, date_acquired)
+                    VALUES (%s, %s, %s, %s, %s)
                     """
         date_returned = date.today()
-        exec_commit(sql, (tool_owner, tool_requested, tool_requested, username, date_returned, duration))
+        date_acquired = datetime.strptime("" + date_year + "/" + date_mo + "/" + date_day, '%Y/%m/%d')
+        date_acquired = date_acquired.date()
+        exec_commit(sql, (tool_owner, tool_requested, tool_requested, username, date_returned, duration, date_acquired))
 
 
 class DeleteTool(Resource):
