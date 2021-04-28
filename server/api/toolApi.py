@@ -18,6 +18,7 @@ class GetUserTools(Resource):
         return list(exec_get_all(sql, [username]))
 
 
+
 class EditTool(Resource):
     def put(self, barcode):
         parser = reqparse.RequestParser()
@@ -40,7 +41,6 @@ class EditTool(Resource):
             WHERE barcode = %s
         """
         exec_commit(sql, (tool_name, description, purchase_date, purchase_price, shareable, barcode))
-
 
 class SearchForAvailableCategories(Resource):
     def get(self, username, category):
@@ -68,7 +68,6 @@ class SearchForAvailableCategories(Resource):
         """
         return exec_get_all(sql, [username, category, username])
 
-
 class SearchForAvailableBarcodes(Resource):
     def get(self, username, barcode):
         sql = """
@@ -94,7 +93,6 @@ class SearchForAvailableBarcodes(Resource):
         """
         return exec_get_all(sql, [username, barcode, username])
 
-
 class SearchForAvailableNames(Resource):
     def get(self, username, name):
         sql = """
@@ -119,6 +117,7 @@ class SearchForAvailableNames(Resource):
             ORDER BY name
         """
         return exec_get_all(sql, [username, name, username])
+
 
 
 class SearchForCategories(Resource):
@@ -181,7 +180,6 @@ class RemoveCategoryFromTool(Resource):
             WHERE category_type = %s AND barcode = %s
         """
         exec_commit(sql, (type, barcode))
-
 
 class CreateTool(Resource):
     def post(self):
@@ -304,9 +302,32 @@ class DeleteTool(Resource):
                                 """
         exec_commit(sql, [tool, tool, tool])
 
+class GetCountofAvail(Resource):
+    def get(self, username):
+        sql = """
+            SELECT COUNT(*) as c
+            FROM tools
+            WHERE tool_owner <> %s
+            AND SHAREABLE = true
+            AND barcode NOT IN
+                (
+                SELECT requested_tool
+                FROM request
+                WHERE status = 'Accepted'
+                )
+            AND barcode NOT IN
+                (
+                SELECT requested_tool
+                FROM request
+                WHERE status = 'Pending'
+                AND username = %s
+                )
+        """
+        return list(exec_get_all(sql, [username, username]))
 
 class AvailableTools(Resource):
-    def get(self, username):
+    def get(self, username, offset):
+        int_off = int(offset)
         sql = """
             SELECT barcode, name, description, tool_owner 
             FROM tools
@@ -326,9 +347,9 @@ class AvailableTools(Resource):
                 AND username = %s
                 )
             ORDER BY name
+            LIMIT 50 OFFSET 50*%s
             """
-        return list(exec_get_all(sql, [username, username]))
-
+        return list(exec_get_all(sql, [username, username, int_off]))
 
 class RequestTool(Resource):
     def post(self, requested_tool, username, tool_owner):
@@ -344,7 +365,6 @@ class RequestTool(Resource):
                             VALUES (%s, %s, %s, %s, %s, 'Pending')
                         """
         exec_commit(sql, (username, requested_tool, tool_owner, date_required, duration))
-
 
 class GetUserOutgoing(Resource):
     def get(self, username):
@@ -365,7 +385,6 @@ class CancelRequest(Resource):
         """
         exec_commit(sql, [username, requested_tool])
 
-
 class Top10Borrowed(Resource):
     def get(self, username):
         sql = """
@@ -379,7 +398,6 @@ class Top10Borrowed(Resource):
                             """
         return list(exec_get_all(sql, [username]))
 
-
 class Top10Lent(Resource):
     def get(self, username):
         sql = """
@@ -392,7 +410,6 @@ class Top10Lent(Resource):
                     LIMIT 10
                             """
         return list(exec_get_all(sql, [username]))
-
 
 class GetRecommendation(Resource):
     def get(self, username, requested_tool):
@@ -463,7 +480,6 @@ class GetRecommendation(Resource):
                     new_list.append((barcode, name, description, tool_owner, date_returned))
             return_list = new_list[0:3]
             return return_list
-
 
 class GetToolCount(Resource):
     def get(self, username):
