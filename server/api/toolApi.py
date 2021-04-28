@@ -383,3 +383,73 @@ class Top10Lent(Resource):
                     LIMIT 10
                             """
         return list(exec_get_all(sql, [username]))
+
+class GetRecommendation(Resource):
+    def get(self, username, requested_tool):
+        sql = """
+                    SELECT t.barcode, t.name, t.description, t.tool_owner, r.date_returned
+                    FROM tools t, returned_tool r
+                    WHERE tool_owner <> %s
+                    AND r.barcode <> %s
+                    AND t.barcode = r.barcode
+                    AND r.date_returned IN
+                    (
+                        SELECT date_returned
+                        FROM returned_tool
+                        WHERE barcode = %s
+                    )
+                    AND t.barcode NOT IN
+                    (
+                        SELECT requested_tool
+                        FROM request
+                        WHERE status = 'Accepted'
+                    )
+                    AND t.barcode NOT IN
+                    (
+                        SELECT requested_tool
+                        FROM request
+                        WHERE status = 'Pending'
+                        AND username = %s
+                    )
+                    LIMIT 3
+                            """
+
+        rec_list = list(exec_get_all(sql, [username, requested_tool, requested_tool, username]))
+        if len(rec_list) == 3: return rec_list
+        # If there are not three similarly borrowed tools available
+        # Then select tools frequently borrowed
+        else:
+            sql = """
+                    SELECT t.barcode, t.name, t.description, t.tool_owner, r.date_returned
+                    FROM tools t, returned_tool r
+                    WHERE t.tool_owner <> %s
+                    AND r.barcode <> %s
+                    AND t.barcode = r.barcode
+                    AND t.barcode NOT IN
+                    (
+                        SELECT requested_tool
+                        FROM request
+                        WHERE status = 'Accepted'
+                    )
+                    AND t.barcode NOT IN
+                    (
+                        SELECT requested_tool
+                        FROM request
+                        WHERE status = 'Pending'
+                        AND username = %s
+                    )
+                    GROUP BY t.barcode, t.name, t.description, t.tool_owner, r.date_returned
+                    ORDER BY COUNT(r.barcode) DESC
+                    LIMIT 3
+            """
+            rec_list2 = list(exec_get_all(sql, [username, requested_tool, username]))
+
+            rec_list.extend(rec_list2)
+            seen = set()
+            new_list = []
+            for (barcode, name, description, tool_owner, date_returned) in rec_list:
+                if (barcode, name, description, tool_owner, date_returned) not in new_list:
+                    seen.add((barcode, name, description, tool_owner, date_returned))
+                    new_list.append((barcode, name, description, tool_owner, date_returned))
+            return_list = new_list[0:3]
+            return return_list
