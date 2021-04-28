@@ -300,8 +300,32 @@ class DeleteTool(Resource):
                                 """
         exec_commit(sql, [tool, tool, tool])
 
-class AvailableTools(Resource):
+class GetCountofAvail(Resource):
     def get(self, username):
+        sql = """
+            SELECT COUNT(*) as c
+            FROM tools
+            WHERE tool_owner <> %s
+            AND SHAREABLE = true
+            AND barcode NOT IN
+                (
+                SELECT requested_tool
+                FROM request
+                WHERE status = 'Accepted'
+                )
+            AND barcode NOT IN
+                (
+                SELECT requested_tool
+                FROM request
+                WHERE status = 'Pending'
+                AND username = %s
+                )
+        """
+        return list(exec_get_all(sql, [username, username]))
+
+class AvailableTools(Resource):
+    def get(self, username, offset):
+        int_off = int(offset)
         sql = """
             SELECT barcode, name, description, tool_owner 
             FROM tools
@@ -321,8 +345,9 @@ class AvailableTools(Resource):
                 AND username = %s
                 )
             ORDER BY name
+            LIMIT 50 OFFSET 50*%s
             """
-        return list(exec_get_all(sql, [username, username]))
+        return list(exec_get_all(sql, [username, username, int_off]))
 
 class RequestTool(Resource):
     def post(self, requested_tool, username, tool_owner):

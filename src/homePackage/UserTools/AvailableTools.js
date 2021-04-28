@@ -18,7 +18,7 @@ class AvailableTools extends Component {
 
         pageIndex: 0,
         pageSize: 50,
-        pageTotal: 0
+        total: 0,
      }
     }
 
@@ -27,8 +27,8 @@ class AvailableTools extends Component {
         this.setState({user: this.state.currentUser})
     }
 
-    fetchAllTools = () => {
-        fetch('/getAvailableTools/' +this.state.currentUser)
+    fetchAllTools = (newIndex) => {
+        fetch('/getAvailableTools/' +this.state.currentUser + '/' + newIndex)
             .then(
                 response => response.json()
             ).then(jsonOutput => {
@@ -37,7 +37,8 @@ class AvailableTools extends Component {
         })
     }
     componentDidMount() {
-        this.fetchAllTools()
+        this.fetchCount()
+        this.fetchAllTools(this.state.pageIndex)
     }
 
     displayTool = (tool) => {
@@ -62,9 +63,20 @@ class AvailableTools extends Component {
                 this.updateAllTools(jsonOutput)
         })
     }
+
+    fetchCount = () => {
+        fetch ( '/getCount/' +this.state.currentUser)
+            .then(
+                response => response.json()
+            ) .then(jsonOutput => {
+                console.log(jsonOutput)
+                this.setState({total: jsonOutput})
+        })
+    }
+
     search = () => {
         if (this.state.searchParam === "") {
-            this.fetchAllTools()
+            this.fetchAllTools(this.state.pageIndex)
         } else {
             if (this.state.searchType === "category") {
                 this.fetchSearch('/searchAvailableCategory/')
@@ -80,18 +92,19 @@ class AvailableTools extends Component {
         this.setState(prevState => ({
         pageIndex: prevState.pageIndex > 0 ? prevState.pageIndex - 1 : 0
         }));
-        this.fetchAllTools();
+        this.state.pageIndex > 0 ? this.fetchAllTools(this.state.pageIndex-1) : this.fetchAllTools(this.state.pageIndex)
     }
 
     handleNextPageClick(event) {
         this.setState(prevState => ({
         pageIndex:
         prevState.pageIndex <
-        Math.floor(prevState.available.length / prevState.pageSize)
+        Math.floor(prevState.total / prevState.pageSize)
           ? prevState.pageIndex + 1
           : prevState.pageIndex
     }));
-        this.fetchAllTools();
+        this.state.pageIndex < Math.floor(this.state.total / this.state.pageSize) ?
+            this.fetchAllTools(this.state.pageIndex+1) : this.fetchAllTools(this.state.pageIndex)
   }
 
     render () {
@@ -118,7 +131,7 @@ class AvailableTools extends Component {
                 <Button color="primary"
                         onClick={event => this.handleNextPageClick(event)}
                         >Next</Button>
-                <Label>Page {this.state.pageIndex + 1} of {Math.ceil(this.state.available.length / this.state.pageSize)}</Label>
+                <Label>Page {this.state.pageIndex + 1} of {Math.ceil(this.state.total / this.state.pageSize)}</Label>
                 <Table>
                     <thead>
                         <tr className="text-center">
@@ -131,12 +144,7 @@ class AvailableTools extends Component {
                         </tr>
                     </thead>
                     <tbody className="text-left">
-                        {this.state.available
-                            .slice(
-                                this.state.pageIndex * this.state.pageSize,
-                                this.state.pageIndex * this.state.pageSize + this.state.pageSize
-                            )
-                            .map(available => this.displayTool(available))}
+                        {this.state.available.map(available => this.displayTool(available))}
                     </tbody>
                 </Table>
             </div>
