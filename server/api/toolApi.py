@@ -478,3 +478,32 @@ class GetRecommendation(Resource):
                     new_list.append((barcode, name, description, tool_owner, date_returned))
             return_list = new_list[0:3]
             return return_list
+
+class GetToolCount(Resource):
+    def get(self, username):
+        sql = """
+                  SELECT COUNT(*)
+                  FROM tools
+                  WHERE tool_owner = %s AND shareable = true 
+        """
+        return exec_get_one(sql, [username])
+
+
+class GetLentCount(Resource):
+    def get(self, username):
+        sql = """
+                      SELECT COUNT(*)
+                      FROM request
+                      WHERE tool_owner = %s AND status = 'Accepted'
+            """
+        return exec_get_one(sql, [username])
+
+
+class GetBorrowedCount(Resource):
+    def get(self, username):
+        sql = """
+                    SELECT COUNT(*)
+                    FROM request
+                    WHERE username = %s AND status = 'Accepted'
+                """
+        return exec_get_one(sql, [username])
