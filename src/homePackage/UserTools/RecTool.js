@@ -47,7 +47,7 @@ class RecTool extends Component {
         return (
             <Card>
                 <CardBody>
-                    <CardTitle tag="h5">{this.state.myToolArgs[1]}</CardTitle>
+                    <CardTitle tag="h5">{this.state.myToolArgs[1]} - {this.state.myToolArgs[0]}</CardTitle>
                     <CardSubtitle tag="h6" className="mb-2 text-muted">{this.state.myToolArgs[3]}</CardSubtitle>
                     <CardText>{this.state.myToolArgs[2]}</CardText>
                     <RequestButton username={this.state.user}

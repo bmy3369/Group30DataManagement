@@ -22,9 +22,6 @@ class RequestButton extends Component {
             modal: false,
             nestedModal: false,
             rectools: [],
-            tool_1: [],
-            tool_2: [],
-            tool_3: [],
         }
 
     }
@@ -72,7 +69,7 @@ class RequestButton extends Component {
     }
 
     fetchRecs = () => {
-        fetch('/getRecommended/' + this.state.username)
+        fetch('/getRecommended/' + this.state.username + '/' + this.state.requested_tool)
             .then(
                 response => response.json()
             ).then(jsonOutput => {
@@ -123,13 +120,13 @@ class RequestButton extends Component {
                     <Button color="primary" onClick={() => {this.toggleNested();
                     this.submitForm();
                     this.fetchRecs()}}>Request Tool</Button>
-                        <Modal isOpen={this.state.nestedModal} toggle={this.toggleNested}>
+                        <Modal isOpen={this.state.nestedModal} toggle={this.toggleNested} backdrop={false}>
                         <ModalHeader>Success!</ModalHeader>
                         <ModalBody>
                             Request sent to {this.state.tool_owner}.
                         </ModalBody>
                             <ModalBody>
-                            Based on your request, users also requested:
+                            Based on your request, users also borrowed:
                         </ModalBody>
                         <ModalFooter>
                             <CardGroup>
