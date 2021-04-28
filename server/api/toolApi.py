@@ -18,7 +18,6 @@ class GetUserTools(Resource):
         return list(exec_get_all(sql, [username]))
 
 
-
 class EditTool(Resource):
     def put(self, barcode):
         parser = reqparse.RequestParser()
@@ -41,6 +40,7 @@ class EditTool(Resource):
             WHERE barcode = %s
         """
         exec_commit(sql, (tool_name, description, purchase_date, purchase_price, shareable, barcode))
+
 
 class SearchForAvailableCategories(Resource):
     def get(self, username, category):
@@ -68,6 +68,7 @@ class SearchForAvailableCategories(Resource):
         """
         return exec_get_all(sql, [username, category, username])
 
+
 class SearchForAvailableBarcodes(Resource):
     def get(self, username, barcode):
         sql = """
@@ -93,6 +94,7 @@ class SearchForAvailableBarcodes(Resource):
         """
         return exec_get_all(sql, [username, barcode, username])
 
+
 class SearchForAvailableNames(Resource):
     def get(self, username, name):
         sql = """
@@ -117,7 +119,6 @@ class SearchForAvailableNames(Resource):
             ORDER BY name
         """
         return exec_get_all(sql, [username, name, username])
-
 
 
 class SearchForCategories(Resource):
@@ -180,6 +181,7 @@ class RemoveCategoryFromTool(Resource):
             WHERE category_type = %s AND barcode = %s
         """
         exec_commit(sql, (type, barcode))
+
 
 class CreateTool(Resource):
     def post(self):
@@ -300,6 +302,7 @@ class DeleteTool(Resource):
                                 """
         exec_commit(sql, [tool, tool, tool])
 
+
 class AvailableTools(Resource):
     def get(self, username):
         sql = """
@@ -324,6 +327,7 @@ class AvailableTools(Resource):
             """
         return list(exec_get_all(sql, [username, username]))
 
+
 class RequestTool(Resource):
     def post(self, requested_tool, username, tool_owner):
         parser = reqparse.RequestParser()
@@ -338,6 +342,7 @@ class RequestTool(Resource):
                             VALUES (%s, %s, %s, %s, %s, 'Pending')
                         """
         exec_commit(sql, (username, requested_tool, tool_owner, date_required, duration))
+
 
 class GetUserOutgoing(Resource):
     def get(self, username):
@@ -358,6 +363,7 @@ class CancelRequest(Resource):
         """
         exec_commit(sql, [username, requested_tool])
 
+
 class Top10Borrowed(Resource):
     def get(self, username):
         sql = """
@@ -371,6 +377,7 @@ class Top10Borrowed(Resource):
                             """
         return list(exec_get_all(sql, [username]))
 
+
 class Top10Lent(Resource):
     def get(self, username):
         sql = """
@@ -383,3 +390,33 @@ class Top10Lent(Resource):
                     LIMIT 10
                             """
         return list(exec_get_all(sql, [username]))
+
+
+class GetToolCount(Resource):
+    def get(self, username):
+        sql = """
+                  SELECT COUNT(*)
+                  FROM tools
+                  WHERE tool_owner = %s AND shareable = true 
+        """
+        return exec_get_one(sql, [username])
+
+
+class GetLentCount(Resource):
+    def get(self, username):
+        sql = """
+                      SELECT COUNT(*)
+                      FROM request
+                      WHERE tool_owner = %s AND status = 'Accepted'
+            """
+        return exec_get_one(sql, [username])
+
+
+class GetBorrowedCount(Resource):
+    def get(self, username):
+        sql = """
+                    SELECT COUNT(*)
+                    FROM request
+                    WHERE username = %s AND status = 'Accepted'
+                """
+        return exec_get_one(sql, [username])

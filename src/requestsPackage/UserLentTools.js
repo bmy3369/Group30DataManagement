@@ -5,7 +5,7 @@ import {
     Button, Table, Row, Input, Label, Col
 } from 'reactstrap';
 import LentTool from "./LentTool";
-import TopLent from "./TopLent";
+
 /**
  * Displays the tools the User has lent out to other users
  */
@@ -15,7 +15,6 @@ class UserLentTools extends Component {
         this.state = {
             currentUser: props.user,
             lentTools: [],
-            topLent: []
         }
     }
 
@@ -27,9 +26,6 @@ class UserLentTools extends Component {
         this.setState({lentTools: allTools})
     }
 
-    updateTop10 = (allTools) => {
-        this.setState({topLent: allTools})
-    }
 
     /**
      * Gets the tools from the database through the server
@@ -43,25 +39,10 @@ class UserLentTools extends Component {
         })
     }
 
-    fetchTop10 = () => {
-        fetch('/getTopLent/' + this.state.currentUser)
-            .then(
-                response => response.json()
-            ).then(jsonOutput => {
-            this.updateTop10(jsonOutput)
-        })
-    }
-
     componentDidMount() {
         this.fetchAllTools()
-        this.fetchTop10()
     }
 
-    displayTop10 = (currentUser, topLent) => {
-        return (
-            <TopLent user={currentUser} topLent={topLent}/>
-        )
-    }
 
     /**
      * Formats the tools into a form usable in html
@@ -77,21 +58,6 @@ class UserLentTools extends Component {
     render() {
         return (
             <div className="m-4">
-                <header className="text-center">Top 10 Most Frequently Lent Tools</header>
-                <Table>
-                    <thead>
-                    <tr className="text-center">
-                        <th>Tool Barcode</th>
-                        <th>Tool Name</th>
-                        <th>Times Lent</th>
-                        <th>Average Lent Time</th>
-                        <th>Percentage of time lent</th>
-                    </tr>
-                    </thead>
-                    <tbody className="text-left">
-                    {this.state.topLent.map(topLent => this.displayTop10(this.state.currentUser, topLent))}
-                    </tbody>
-                </Table>
                 <Button color={'success'} onClick={this.fetchAllTools}>Refresh</Button>
                 <header className="text-center">Lent Tools</header>
                 <Table>
@@ -110,7 +76,6 @@ class UserLentTools extends Component {
             </div>
         )
     }
-
 }
 
 export default UserLentTools;
