@@ -38,6 +38,7 @@ api.add_resource(SearchForAvailableBarcodes, '/searchAvailableBarcode/<string:us
 api.add_resource(SearchForAvailableNames, '/searchAvailableName/<string:username>/<string:name>')
 api.add_resource(Top10Borrowed, '/getTopBorrowed/<string:username>')
 api.add_resource(Top10Lent, '/getTopLent/<string:username>')
+api.add_resource(GetRecommendation, '/getRecommended/<string:username>/<string:requested_tool>')
 api.add_resource(GetToolCount, '/getToolCount/<string:username>')
 api.add_resource(GetLentCount, '/getLentCount/<string:username>')
 api.add_resource(GetBorrowedCount, '/getBorrowedCount/<string:username>')

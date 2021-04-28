@@ -9,7 +9,7 @@ Label, Modal, ModalHeader, ModalBody, Form, FormGroup, Input, ModalFooter, Butto
 import AvTool from "./AvTool"
 import RecTool from "./RecTool"
 
-class RequestButton extends Component {
+class RecomReqButton extends Component {
     constructor(props) {
         super(props);
 
@@ -20,19 +20,13 @@ class RequestButton extends Component {
             date_required: "",
             duration: "",
             modal: false,
-            nestedModal: false,
             rectools: [],
         }
 
     }
 
-
     toggle = () => {
         this.setState({modal: !this.state.modal})
-    }
-
-    toggleNested = () => {
-        this.setState({nestedModal: !this.state.nestedModal})
     }
 
     acceptTool = () => {
@@ -57,27 +51,6 @@ class RequestButton extends Component {
             )
     }
 
-    displayRec = (tool) => {
-        return (
-            <RecTool available={tool} user={this.state.username}/>
-        );
-    }
-
-
-    updateRec = (list) => {
-        this.setState({rectools: list})
-    }
-
-    fetchRecs = () => {
-        fetch('/getRecommended/' + this.state.username + '/' + this.state.requested_tool)
-            .then(
-                response => response.json()
-            ).then(jsonOutput => {
-                this.updateRec(jsonOutput)
-        })
-    }
-
-
     updateProp = (event) => {
         if(event.target.id === "enteredDuration") {
             this.setState({duration: event.target.value})
@@ -87,11 +60,7 @@ class RequestButton extends Component {
     }
     submitForm = () => {
         this.acceptTool()
-    }
-
-    toggleAll = () => {
         this.toggle()
-        this.toggleNested()
     }
 
     render() {
@@ -117,24 +86,7 @@ class RequestButton extends Component {
                         </Form>
                     </ModalBody>
                     <ModalFooter>
-                    <Button color="primary" onClick={() => {this.toggleNested();
-                    this.submitForm();
-                    this.fetchRecs()}}>Request Tool</Button>
-                        <Modal isOpen={this.state.nestedModal} toggle={this.toggleNested} backdrop={false}>
-                        <ModalHeader>Success!</ModalHeader>
-                        <ModalBody>
-                            Request sent to {this.state.tool_owner}.
-                        </ModalBody>
-                            <ModalBody>
-                            Based on your request, users also borrowed:
-                        </ModalBody>
-                        <ModalFooter>
-                            <CardGroup>
-                                {this.state.rectools.map(rectool => this.displayRec(rectool))}
-                            </CardGroup>
-                        <Button color="secondary" onClick={this.toggleAll}>Done</Button>
-                        </ModalFooter>
-                        </Modal>
+                        <Button color="primary" onClick={() => {this.submitForm();}}>Request Tool</Button>
                     </ModalFooter>
                 </Modal>
             </div>
@@ -142,7 +94,7 @@ class RequestButton extends Component {
     }
 
 }
-export default RequestButton
+export default RecomReqButton
 
 
 
